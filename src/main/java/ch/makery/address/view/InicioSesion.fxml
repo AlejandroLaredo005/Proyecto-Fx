@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InicioSesionController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="214.0" style="-fx-background-color: blue;">
          <children>
@@ -34,13 +34,13 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField layoutX="135.0" layoutY="91.0" />
+            <TextField fx:id="txtUsuario" layoutX="135.0" layoutY="91.0" />
             <Label layoutX="168.0" layoutY="125.0" text="Contraseña">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField layoutX="136.0" layoutY="151.0" />
+            <TextField fx:id="txtPassword" layoutX="136.0" layoutY="151.0" />
             <Button layoutX="137.0" layoutY="199.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Iniciar Sesión">
                <cursor>
                   <Cursor fx:constant="HAND" />
