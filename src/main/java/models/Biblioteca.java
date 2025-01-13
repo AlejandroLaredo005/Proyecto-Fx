@@ -1,93 +1,103 @@
 package models;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
+import java.io.Serializable;
 
 @Entity
-public class Biblioteca {
+@Table(name = "biblioteca")
+public class Biblioteca implements Serializable {
 
-  @Id
-  @Column(name = "id_biblioteca")
-  private String idBiblioteca;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_biblioteca")
+    private Integer idBiblioteca;
 
-  @ManyToOne
-  @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-  private Usuarios idUsuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
+    @Cascade(CascadeType.ALL)
+    private Usuarios usuario;
 
-  @ManyToOne
-  @JoinColumn(name = "id_juego", referencedColumnName = "id_juego")
-  private Juegos idJuego;
+    @ManyToOne
+    @JoinColumn(name = "id_juego", referencedColumnName = "id_juego", nullable = false)
+    @Cascade(CascadeType.ALL)
+    private Juegos juego;
 
-  @Column(name = "comentarios")
-  private String comentarios;
+    @Column(name = "comentarios")
+    private String comentarios;
 
-  @Column(name = "estado")
-  private String estado;
+    @Column(name = "estado", nullable = false)
+    private String estado;
 
-  // Constructor sin parámetros
-  public Biblioteca() {}
+    // Constructor vacío
+    public Biblioteca() {}
 
-  // Constructor con parámetros
-  public Biblioteca(String idBiblioteca, Usuarios idUsuario, Juegos idJuego, String comentarios, String estado) {
-    this.idBiblioteca = idBiblioteca;
-    this.idUsuario = idUsuario;
-    this.idJuego = idJuego;
-    this.comentarios = comentarios;
-    this.estado = estado;
-  }
+    // Constructor con parámetros
+    public Biblioteca(Usuarios usuario, Juegos juego, String comentarios, String estado) {
+        this.usuario = usuario;
+        this.juego = juego;
+        this.comentarios = comentarios;
+        this.estado = estado;
+    }
 
-  // Getters y setters
-  public String getIdBiblioteca() {
-    return idBiblioteca;
-  }
+    // Getters y Setters
+    public Integer getIdBiblioteca() {
+        return idBiblioteca;
+    }
 
-  public void setIdBiblioteca(String idBiblioteca) {
-    this.idBiblioteca = idBiblioteca;
-  }
+    public void setIdBiblioteca(Integer idBiblioteca) {
+        this.idBiblioteca = idBiblioteca;
+    }
 
-  public Usuarios getIdUsuario() {
-    return idUsuario;
-  }
+    public Usuarios getUsuario() {
+        return usuario;
+    }
 
-  public void setIdUsuario(Usuarios idUsuario) {
-    this.idUsuario = idUsuario;
-  }
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
+    }
 
-  public Juegos getIdJuego() {
-    return idJuego;
-  }
+    public Juegos getJuego() {
+        return juego;
+    }
 
-  public void setIdJuego(Juegos idJuego) {
-    this.idJuego = idJuego;
-  }
+    public void setJuego(Juegos juego) {
+        this.juego = juego;
+    }
 
-  public String getComentarios() {
-    return comentarios;
-  }
+    public String getComentarios() {
+        return comentarios;
+    }
 
-  public void setComentarios(String comentarios) {
-    this.comentarios = comentarios;
-  }
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
+    }
 
-  public String getEstado() {
-    return estado;
-  }
+    public String getEstado() {
+        return estado;
+    }
 
-  public void setEstado(String estado) {
-    this.estado = estado;
-  }
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
-  @Override
-  public String toString() {
-    return "Biblioteca{" +
-           "idBiblioteca='" + idBiblioteca + '\'' +
-           ", idUsuario=" + idUsuario +
-           ", idJuego=" + idJuego +
-           ", comentarios='" + comentarios + '\'' +
-           ", estado='" + estado + '\'' +
-           '}';
-  }
+    @Override
+    public String toString() {
+        return "Biblioteca{" +
+                "idBiblioteca=" + idBiblioteca +
+                ", usuario=" + usuario +
+                ", juego=" + juego +
+                ", comentarios='" + comentarios + '\'' +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
 }

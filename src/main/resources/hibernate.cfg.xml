@@ -10,6 +10,9 @@
         <!-- Configuración de sesión actual -->
         <property name="hibernate.current_session_context_class">thread</property>
 
+        <!-- Configuración para que Hibernate cree o actualice el esquema de la base de datos -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
         <!-- Configuración de mapeo -->
         <mapping class="models.Biblioteca"/>
         <mapping class="models.Juegos"/>
