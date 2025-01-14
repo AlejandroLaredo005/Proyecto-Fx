@@ -13,6 +13,22 @@ import models.Usuarios;
 import java.util.List;
 
 public class InicioSesionController {
+<<<<<<< HEAD
+=======
+  
+  @FXML
+  private TextField txtUsuario;
+  
+  @FXML
+  private TextField txtPassword;
+  
+  @FXML
+  private void registerUser() {
+      try {
+          // Cargar el nuevo archivo FXML
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/Registro.fxml"));
+          Parent root = loader.load();
+>>>>>>> 818f850 (Añado registro)
 
     @FXML
     private TextField txtUsuario;
