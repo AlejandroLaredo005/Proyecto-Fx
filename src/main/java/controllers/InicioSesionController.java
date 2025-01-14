@@ -75,10 +75,10 @@ public class InicioSesionController {
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-      Alert alert = new Alert(tipo);
-      alert.setTitle(titulo);
-      alert.setHeaderText(null);
-      alert.setContentText(mensaje);
-      alert.showAndWait();
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
