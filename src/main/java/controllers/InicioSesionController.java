@@ -13,22 +13,6 @@ import models.Usuarios;
 import java.util.List;
 
 public class InicioSesionController {
-<<<<<<< HEAD
-=======
-  
-  @FXML
-  private TextField txtUsuario;
-  
-  @FXML
-  private TextField txtPassword;
-  
-  @FXML
-  private void registerUser() {
-      try {
-          // Cargar el nuevo archivo FXML
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/Registro.fxml"));
-          Parent root = loader.load();
->>>>>>> 818f850 (Añado registro)
 
     @FXML
     private TextField txtUsuario;
@@ -91,10 +75,10 @@ public class InicioSesionController {
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
+      Alert alert = new Alert(tipo);
+      alert.setTitle(titulo);
+      alert.setHeaderText(null);
+      alert.setContentText(mensaje);
+      alert.showAndWait();
+    }
 }
