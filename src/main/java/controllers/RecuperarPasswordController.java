@@ -14,7 +14,8 @@ public class RecuperarPasswordController {
     @FXML
     private TextField txtCorreo;
 
-    private String codigoGenerado;
+    // Propiedad estática para acceder al código generado
+    public static String codigoGenerado;
 
     @FXML
     private void mandarCodigo() {
