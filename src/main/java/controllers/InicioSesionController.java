@@ -25,6 +25,8 @@ public class InicioSesionController {
     private void iniciarSesion() {
         String usuario = txtUsuario.getText();
         String contrasena = txtPassword.getText();
+        
+     
 
         if (usuario.isEmpty() || contrasena.isEmpty()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor, complete todos los campos.");
