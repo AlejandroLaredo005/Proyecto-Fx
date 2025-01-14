@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InicioController">
+   <top>
+      <fx:include source="Navegador.fxml" />
+   </top>
+   <center>
+      <!-- Aquí va el contenido principal de la ventana -->
+   </center>
+   <center>
+      <AnchorPane prefHeight="142.0" prefWidth="403.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
+            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" />
+            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="484.0" layoutY="22.0" onMouseClicked="#buscar" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../resources/hysinc%20games.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="269.0" layoutY="73.0" text="Creemos que estos juegos pueden interesarte" />
+            <AnchorPane layoutX="29.0" layoutY="91.0" prefHeight="174.0" prefWidth="142.0" style="-fx-background-color: #000939;">
+               <children>
+                  <Label layoutX="20.0" layoutY="14.0" text="Te podría interesar:" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="40.0" onMouseClicked="#juegosMes" prefHeight="34.0" prefWidth="88.0" text="Juegos que han salido este mes" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="19.0" layoutY="87.0" onMouseClicked="#juegosCritica" prefHeight="34.0" prefWidth="88.0" text="Juegos alavados por la crítica" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="125.0" onMouseClicked="#juegosYear" prefHeight="34.0" prefWidth="88.0" text="Juegos que han salido este año" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <HBox layoutX="269.0" layoutY="122.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <ImageView fx:id="img1" fitHeight="111.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img2" fitHeight="111.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img3" fitHeight="111.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="195.0" layoutY="147.0" onMouseClicked="#flechaIzquierdaPulsada" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="534.0" layoutY="147.0" onMouseClicked="#flechaDerechaPulsada" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
