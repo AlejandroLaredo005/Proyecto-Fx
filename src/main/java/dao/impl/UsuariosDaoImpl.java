@@ -106,4 +106,39 @@ public class UsuariosDaoImpl implements UsuariosDao {
 
         return usuarios;  // Devuelve la lista de usuarios
     }
+
+    public Optional<Usuarios> findByUsuario(String nombreUsuario) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Usuarios usuario = null;
+
+        try {
+            usuario = session.createQuery("FROM Usuarios WHERE nombreUsuario = :nombreUsuario", Usuarios.class)
+                             .setParameter("nombreUsuario", nombreUsuario)
+                             .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return Optional.ofNullable(usuario);
+    }
+
+    // Método para buscar un usuario por su correo
+    public Optional<Usuarios> findByCorreo(String correo) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Usuarios usuario = null;
+
+        try {
+            usuario = session.createQuery("FROM Usuarios WHERE correo = :correo", Usuarios.class)
+                             .setParameter("correo", correo)
+                             .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return Optional.ofNullable(usuario);
+    }
 }
