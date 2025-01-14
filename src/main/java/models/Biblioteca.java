@@ -38,10 +38,10 @@ public class Biblioteca implements Serializable {
     @Column(name = "estado", nullable = false)
     private String estado;
 
-    // Constructor vacío
+    // Constructor vacio
     public Biblioteca() {}
 
-    // Constructor con parámetros
+    // Constructor con parametros
     public Biblioteca(Usuarios usuario, Juegos juego, String comentarios, String estado) {
         this.usuario = usuario;
         this.juego = juego;
