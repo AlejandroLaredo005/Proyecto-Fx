@@ -73,6 +73,25 @@ public class InicioSesionController {
             e.printStackTrace();
         }
     }
+    
+    @FXML
+    private void recuperarPassword() {
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/RecuperarPassword.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Recuperar Contraseña");
+        stage.show();
+
+        Stage currentStage = (Stage) txtUsuario.getScene().getWindow();
+        currentStage.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
       Alert alert = new Alert(tipo);
