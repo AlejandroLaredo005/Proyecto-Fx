@@ -1,5 +1,6 @@
 package ch.makery.address;
 
+import api.ApiClient;
 import utils.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,21 @@ public class MainApp extends Application {
         // Inicializar la conexión a la base de datos al iniciar la aplicación
         HibernateUtil.getSessionFactory();
         System.out.println("Conexión a la base de datos establecida.");
+
+        // Realizar una llamada a la API
+        String apiKey = "8d18e821b4e6491d8a1096ba1a106001"; 
+        ApiClient apiClient = new ApiClient(apiKey);
+
+        try {
+            String endpoint = "games";
+            String queryParams = "page=1&page_size=5"; // Ejemplo de parámetros
+            String response = apiClient.fetch(endpoint, queryParams);
+
+            // Imprimir la respuesta de la API
+            System.out.println("Respuesta de la API: " + response);
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error al realizar la solicitud a la API: " + e.getMessage());
+        }
 
         // Inicializar el layout principal
         initInicioLayout();
