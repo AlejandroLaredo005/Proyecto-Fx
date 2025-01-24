@@ -47,7 +47,20 @@ public class InicioSesionController {
                 // Lógica para abrir una nueva ventana
                 Stage currentStage = (Stage) txtUsuario.getScene().getWindow();
                 currentStage.close();
-                // Aquí puedes abrir una nueva escena si lo deseas
+                
+                // Abrir la nueva ventana principal
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/Inicio.fxml"));
+                    Parent root = loader.load();
+                    
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.setTitle("Inicio");
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
                 mostrarAlerta(Alert.AlertType.ERROR, "Error de autenticación", "Contraseña incorrecta.");
             }
