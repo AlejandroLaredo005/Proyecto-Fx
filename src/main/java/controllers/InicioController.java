@@ -6,10 +6,14 @@ import java.util.List;
 
 import api.ApiClient;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class InicioController {
 
@@ -79,15 +83,42 @@ public class InicioController {
     // Métodos para manejar eventos
     @FXML
     private void buscar(MouseEvent event) {
-        String textoBuscado = txtBuscador.getText();
-        System.out.println("Buscando: " + textoBuscado);
-        // Implementar lógica para buscar juegos
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/Buscador.fxml"));
+        Parent root = loader.load();
+        
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Buscador");
+        stage.show();
+        
+        // Cerrar la ventana actual
+        Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
+        currentStage.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML
     private void juegosMes(MouseEvent event) {
-        System.out.println("Mostrando juegos que han salido este mes");
-        // Implementar lógica para mostrar juegos del mes
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/JuegosEsteMes.fxml"));
+        Parent root = loader.load();
+        
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Juegos este Mes");
+        stage.show();
+        
+        // Cerrar la ventana actual
+        Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
+        currentStage.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML
