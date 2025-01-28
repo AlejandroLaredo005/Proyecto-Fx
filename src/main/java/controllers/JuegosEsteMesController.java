@@ -2,17 +2,14 @@ package controllers;
 
 import java.io.IOException;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import api.ApiClient;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class JuegosEsteMesController {
@@ -69,7 +66,9 @@ public class JuegosEsteMesController {
         // Obtener el ImageView correspondiente a la iteración
         ImageView imgView = getImageViewByIndex(i);
         
-        imgView.setImage(new Image(imageUrl));
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+          imgView.setImage(new Image(imageUrl));
+      } 
       }
     } catch (IOException | InterruptedException e) {
         e.printStackTrace();
@@ -93,7 +92,7 @@ public class JuegosEsteMesController {
 }
 
   @FXML
-  private void atras(ActionEvent event) {
+  private void atras(MouseEvent event) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/Inicio.fxml"));
       Parent root = loader.load();
@@ -103,6 +102,12 @@ public class JuegosEsteMesController {
       stage.setScene(scene);
       stage.setTitle("Inicio");
       stage.show();
+      
+      // Obtener el stage de la ventana actual
+      Stage currentStage = (Stage) img1.getScene().getWindow(); 
+
+      // Cerrar la ventana actual
+      currentStage.close();
   } catch (Exception e) {
       e.printStackTrace();
     }
