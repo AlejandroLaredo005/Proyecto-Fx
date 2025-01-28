@@ -13,20 +13,19 @@
       <fx:include source="Navegador.fxml" />
    </top>
    <center>
-      <!-- Aquí va el contenido principal de la ventana -->
-   </center>
-   <center>
       <AnchorPane prefHeight="344.0" prefWidth="592.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
-            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onKeyPressed="#actualizarJuegos" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" />
-            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="484.0" layoutY="22.0" onMouseClicked="#cancelar" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
-               </image>
-            </ImageView>
-            <Label layoutX="200.0" layoutY="57.0" text="Resultados de busqueda" />
-            <ListView layoutX="100.0" layoutY="82.0" prefHeight="145.0" prefWidth="302.0" />
+            <!-- Campo de texto para búsqueda -->
+            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onKeyReleased="#actualizarJuegos" 
+                       prefHeight="26.0" prefWidth="416.0" promptText="Buscar" />
+            
+         
+
+            <Label layoutX="200.0" layoutY="57.0" text="Resultados de búsqueda" />
+            
+            <!-- ListView para mostrar resultados -->
+            <ListView fx:id="listaResultados" layoutX="100.0" layoutY="82.0" prefHeight="230.0" prefWidth="400.0" />
          </children>
       </AnchorPane>
    </center>
