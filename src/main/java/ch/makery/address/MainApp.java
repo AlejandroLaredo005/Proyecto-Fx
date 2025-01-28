@@ -1,4 +1,4 @@
-package ch.makery.address;
+  package ch.makery.address;
 
 import api.ApiClient;
 import utils.HibernateUtil;

@@ -1,20 +1,6 @@
 package models;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-
-import java.util.List;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -46,24 +32,20 @@ public class Juegos implements Serializable {
     @Column(name = "juegos_relacionados")
     private String juegosRelacionados;
 
-    @OneToMany(mappedBy = "juego", fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
-    private List<Biblioteca> biblioteca;
+    @Transient // No se almacena en la base de datos
+    private String imagenUrl;
 
-    // Constructor vacío
     public Juegos() {}
 
-    // Constructor con parámetros
-    public Juegos(String nombreJuego, Integer puntuacionMetacritic, Date fechaSalida, String descripcion, String categorias, String juegosRelacionados) {
+    public Juegos(String nombreJuego, Integer puntuacionMetacritic, String fechaSalida, String descripcion, String categorias, String juegosRelacionados, String imagenUrl) {
         this.nombreJuego = nombreJuego;
         this.puntuacionMetacritic = puntuacionMetacritic;
-        this.fechaSalida = fechaSalida;
         this.descripcion = descripcion;
         this.categorias = categorias;
         this.juegosRelacionados = juegosRelacionados;
+        this.imagenUrl = imagenUrl;
     }
 
-    // Getters y Setters
     public Integer getIdJuego() {
         return idJuego;
     }
@@ -86,14 +68,6 @@ public class Juegos implements Serializable {
 
     public void setPuntuacionMetacritic(Integer puntuacionMetacritic) {
         this.puntuacionMetacritic = puntuacionMetacritic;
-    }
-
-    public Date getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaSalida(Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
     }
 
     public String getDescripcion() {
@@ -120,12 +94,20 @@ public class Juegos implements Serializable {
         this.juegosRelacionados = juegosRelacionados;
     }
 
-    public List<Biblioteca> getBiblioteca() {
-        return biblioteca;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setBiblioteca(List<Biblioteca> biblioteca) {
-        this.biblioteca = biblioteca;
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
+
+    public Date getFechaSalida() {
+      return fechaSalida;
+    }
+
+    public void setFechaSalida(Date fechaSalida) {
+      this.fechaSalida = fechaSalida;
     }
 
     @Override
@@ -138,6 +120,7 @@ public class Juegos implements Serializable {
                 ", descripcion='" + descripcion + '\'' +
                 ", categorias='" + categorias + '\'' +
                 ", juegosRelacionados='" + juegosRelacionados + '\'' +
+                ", imagenUrl='" + imagenUrl + '\'' +
                 '}';
     }
 }

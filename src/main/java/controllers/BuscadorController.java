@@ -1,45 +1,96 @@
 package controllers;
 
+import java.io.IOException;
+import java.util.List;
+
+import api.ApiClient;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import models.Juegos;
 
 public class BuscadorController {
+    private static final String API_KEY = "TU_API_KEY";  
+    private final ApiClient apiClient = new ApiClient(API_KEY);  
 
     @FXML
-    private TextField txtBuscador; // El campo de texto para realizar la búsqueda
+    private TextField txtBuscador;
 
     @FXML
-    private ListView<String> listaResultados; // La lista de resultados de búsqueda
+    private ListView<Juegos> listaResultados;
 
     @FXML
-    private ImageView imgCancelar; // La imagen que, al hacer clic, cancela la búsqueda
+    private ImageView imgCancelar;
 
-    // Este método se ejecuta cuando se presiona una tecla en el TextField (para actualizar los juegos)
     @FXML
-    private void actualizarJuegos() {
-        // Lógica de búsqueda en función del texto ingresado
-        String busqueda = txtBuscador.getText().toLowerCase();
-        // Aquí podrías llamar a un método para buscar los juegos que coinciden con la búsqueda
-        // Por ejemplo, podría ser una lista de juegos, simulada aquí como un arreglo
-        String[] juegosDisponibles = {"Juego A", "Juego B", "Juego C", "Juego D"};
+    private void initialize() {
+        listaResultados.setCellFactory(param -> new ListCell<>() {
+            private final ImageView imageView = new ImageView();
 
-        // Filtrar los juegos que coinciden con la búsqueda
-        listaResultados.getItems().clear();
-        for (String juego : juegosDisponibles) {
-            if (juego.toLowerCase().contains(busqueda)) {
-                listaResultados.getItems().add(juego);
+            @Override
+            protected void updateItem(Juegos juego, boolean empty) {
+                super.updateItem(juego, empty);
+                if (empty || juego == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(juego.getNombreJuego() + " - Metacritic: " + juego.getPuntuacionMetacritic());
+                    if (juego.getImagenUrl() != null) {
+                        imageView.setImage(new Image(juego.getImagenUrl(), 50, 50, true, true));
+                        setGraphic(imageView);
+                    } else {
+                        setGraphic(null);
+                    }
+                }
             }
+        });
+    }
+    @FXML
+    private void cancelar(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inicio.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) txtBuscador.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Inicio - Hysinc Games");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error volviendo a la pantalla de inicio: " + e.getMessage());
         }
     }
 
-    // Este método se ejecuta cuando se hace clic en la imagen de cancelar
+
+    @FXML
+    private void actualizarJuegos() {
+        String busqueda = txtBuscador.getText().trim();
+        if (busqueda.isEmpty()) {
+            listaResultados.getItems().clear();
+            return;
+        }
+
+        new Thread(() -> {
+            List<Juegos> juegos = apiClient.buscarJuegos(busqueda);
+
+            Platform.runLater(() -> {
+                listaResultados.getItems().clear();
+                listaResultados.getItems().addAll(juegos);
+            });
+        }).start();
+    }
+
     @FXML
     private void cancelar(ActionEvent event) {
-        // Limpiar el campo de texto y los resultados de la lista
         txtBuscador.clear();
         listaResultados.getItems().clear();
     }
