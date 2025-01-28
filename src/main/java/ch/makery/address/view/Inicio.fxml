@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InicioController">
+<BorderPane prefHeight="400.0" prefWidth="597.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InicioController">
    <top>
       <fx:include source="Navegador.fxml" />
    </top>
@@ -17,7 +17,7 @@
       <!-- Aquí va el contenido principal de la ventana -->
    </center>
    <center>
-      <AnchorPane prefHeight="142.0" prefWidth="403.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="344.0" prefWidth="592.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
             <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" />
@@ -52,12 +52,13 @@
                </children>
             </AnchorPane>
             <HBox layoutX="269.0" layoutY="122.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <ImageView fx:id="img1" fitHeight="111.0" fitWidth="72.0" onMouseClicked="#img1Pulsada" pickOnBounds="true" preserveRatio="false" />
-                  <ImageView fx:id="img2" fitHeight="111.0" fitWidth="72.0" onMouseClicked="#img2Pulsada" pickOnBounds="true" preserveRatio="false" />
-                  <ImageView fx:id="img3" fitHeight="111.0" fitWidth="72.0" onMouseClicked="#img3Pulsada" pickOnBounds="true" preserveRatio="false" />
-               </children>
-            </HBox>
+   				<children>
+      				<ImageView fx:id="img1" fitHeight="111.0" fitWidth="72.0" onMouseClicked="#img1Pulsada" pickOnBounds="true" preserveRatio="true" />
+      				<ImageView fx:id="img2" fitHeight="111.0" fitWidth="72.0" onMouseClicked="#img2Pulsada" pickOnBounds="true" preserveRatio="true" />
+      				<ImageView fx:id="img3" fitHeight="111.0" fitWidth="72.0" onMouseClicked="#img3Pulsada" pickOnBounds="true" preserveRatio="true" />
+   				</children>
+			</HBox>
+
             <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="195.0" layoutY="147.0" onMouseClicked="#flechaIzquierdaPulsada" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../../../../../../Downloads/hysinc%20games.jpg" />
