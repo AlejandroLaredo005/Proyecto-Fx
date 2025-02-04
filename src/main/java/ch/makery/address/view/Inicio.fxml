@@ -21,9 +21,9 @@
          <children>
             <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
             <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onMouseClicked="#buscar" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" />
-            <ImageView fitHeight="28.0" fitWidth="35.0" layoutX="484.0" layoutY="22.0" onMouseClicked="#buscar" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="462.0" layoutY="25.0" onMouseClicked="#buscar" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
+                  <Image url="@../../../../resources/lupa.png" />
                </image>
             </ImageView>
             <Label layoutX="269.0" layoutY="73.0" text="Creemos que estos juegos pueden interesarte" />
@@ -59,13 +59,13 @@
    				</children>
 			</HBox>
 
-            <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="195.0" layoutY="147.0" onMouseClicked="#flechaIzquierdaPulsada" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="195.0" layoutY="147.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#flechaIzquierdaPulsada" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
+                  <Image url="@../../../../resources/flecha-correcta.png" />
                </image></ImageView>
             <ImageView fitHeight="50.0" fitWidth="46.0" layoutX="534.0" layoutY="147.0" onMouseClicked="#flechaDerechaPulsada" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
+                  <Image url="@../../../../resources/flecha-correcta.png" />
                </image></ImageView>
          </children>
       </AnchorPane>
