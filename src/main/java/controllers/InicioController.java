@@ -31,6 +31,7 @@ public class InicioController {
     private ImageView img3;
     
     private final List<String> imageUrls = new ArrayList<>();
+    private final List<String> gameNames = new ArrayList<>();
     private int currentIndex = 0;
     private final ApiClient apiClient = new ApiClient("8d18e821b4e6491d8a1096ba1a106001");
     
@@ -47,13 +48,16 @@ public class InicioController {
     private void cargarImagenes() throws IOException, InterruptedException {
       String response = apiClient.fetch("games", "ordering=-popularity&page_size=15");
       imageUrls.clear();
+      gameNames.clear();
 
       org.json.JSONObject json = new org.json.JSONObject(response);
       org.json.JSONArray results = json.getJSONArray("results");
 
       for (int i = 0; i < results.length(); i++) {
           String imageUrl = results.getJSONObject(i).optString("cover_image", results.getJSONObject(i).getString("background_image"));
+          String gameName = results.getJSONObject(i).getString("name");
           imageUrls.add(imageUrl);
+          gameNames.add(gameName);
       }
     }
 
@@ -129,8 +133,22 @@ public class InicioController {
 
     @FXML
     private void juegosYear(MouseEvent event) {
-        System.out.println("Mostrando juegos que han salido este año");
-        // Implementar lógica para mostrar juegos del año
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/JuegosEsteYear.fxml"));
+        Parent root = loader.load();
+        
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Juegos este Año");
+        stage.show();
+        
+        // Cerrar la ventana actual
+        Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
+        currentStage.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML
@@ -149,19 +167,42 @@ public class InicioController {
     
     @FXML
     private void img1Pulsada(MouseEvent event) {
-        System.out.println("Mostrando img1");
-        // Implementar lógica para desplazar imágenes a la derecha
+        String nombreJuego = gameNames.get(currentIndex);
+        abrirMostrarJuegos(nombreJuego);
     }
     
     @FXML
     private void img2Pulsada(MouseEvent event) {
-        System.out.println("Mostrando img2");
-        // Implementar lógica para desplazar imágenes a la derecha
+      String nombreJuego = gameNames.get(currentIndex + 1);
+      abrirMostrarJuegos(nombreJuego);
     }
     
     @FXML
     private void img3Pulsada(MouseEvent event) {
-        System.out.println("Mostrando img3");
-        // Implementar lógica para desplazar imágenes a la derecha
+      String nombreJuego = gameNames.get(currentIndex + 2);
+      abrirMostrarJuegos(nombreJuego);
     }
+    
+    private void abrirMostrarJuegos(String nombreJuego) {
+      try {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuego.fxml"));
+          Parent root = loader.load();
+
+          // Obtener el controlador y pasarle el nombre del juego
+          MostrarJuegoController controller = loader.getController();
+          controller.setNombreJuego(nombreJuego);
+
+          Scene scene = new Scene(root);
+          Stage stage = new Stage();
+          stage.setScene(scene);
+          stage.setTitle("Detalles del Juego");
+          stage.show();
+
+          // Cerrar la ventana actual
+          Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
+          currentStage.close();
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+  }
 }

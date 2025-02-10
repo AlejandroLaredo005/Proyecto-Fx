@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controllers.MostrarJuegoController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MostrarJuegoController">
 	<top>
       <fx:include source="Navegador.fxml" />
    </top>
@@ -24,7 +24,7 @@
                   <Image url="@../../../../resources/hysinc%20games.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="tituloJuego" layoutX="181.0" layoutY="25.0" prefHeight="27.0" prefWidth="354.0" text="Titulo del Juego">
+            <Label fx:id="tituloJuego" layoutX="243.0" layoutY="25.0" prefHeight="27.0" prefWidth="288.0" text="Titulo del Juego">
                <font>
                   <Font size="18.0" />
                </font>

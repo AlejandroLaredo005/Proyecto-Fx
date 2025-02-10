@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import api.ApiClient;
 import javafx.fxml.FXML;
@@ -13,8 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.Juegos;
 
-public class JuegosEsteMesController {
+public class JuegosEsteYearController {
   
   @FXML
   private ImageView img1;
