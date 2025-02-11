@@ -10,55 +10,58 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MostrarJuegoController">
-	<top>
-      <fx:include source="Navegador.fxml" />
-   </top>
-   <center>
-      <!-- Aquí va el contenido principal de la ventana -->
-   </center>
-   <left>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="logo" fitHeight="114.0" fitWidth="92.0" layoutX="28.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
-               </image>
-            </ImageView>
-            <Label fx:id="tituloJuego" layoutX="243.0" layoutY="25.0" prefHeight="27.0" prefWidth="288.0" text="Titulo del Juego">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="descripcionJuego" alignment="TOP_LEFT" layoutX="137.0" layoutY="63.0" prefHeight="79.0" prefWidth="436.0" text="Descripcion del juego" />
-            <Pane fx:id="panelMetacritics" layoutX="137.0" layoutY="21.0" prefHeight="35.0" prefWidth="31.0">
-               <children>
-                  <Label fx:id="puntuacionMetacritics" layoutX="5.0" layoutY="9.0" text="100" />
-               </children>
-            </Pane>
-            <Label layoutX="387.0" layoutY="142.0" text="Imágenes del Juego" />
-            <Pane layoutX="314.0" layoutY="167.0" prefHeight="178.0" prefWidth="252.0" style="-fx-background-color: blue;">
-               <children>
-                  <ImageView fx:id="imagenesJuego" fitHeight="150.0" fitWidth="200.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </Pane>
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="537.0" layoutY="345.0" onMouseClicked="#pasarDerecha" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="314.0" layoutY="345.0" onMouseClicked="#pasarIzquierda" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
-               </image>
-            </ImageView>
-            <Label layoutX="28.0" layoutY="142.0" text="Otros juegos relacionados:" />
-            <ListView fx:id="listaJuegosRelacionados" layoutX="28.0" layoutY="167.0" prefHeight="200.0" prefWidth="200.0" />
-            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="544.0" layoutY="24.0" onMouseClicked="#ponerEnBiblioteca" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-   </left>
+    <top>
+        <fx:include source="Navegador.fxml" />
+    </top>
+    <center>
+        <!-- Aquí va el contenido principal de la ventana -->
+    </center>
+    <left>
+        <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fx:id="logo" fitHeight="114.0" fitWidth="92.0" layoutX="28.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../resources/hysinc%20games.jpg" />
+                    </image>
+                </ImageView>
+                <Label fx:id="tituloJuego" layoutX="243.0" layoutY="25.0" prefHeight="27.0" prefWidth="288.0" text="Titulo del Juego">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="descripcionJuego" alignment="TOP_LEFT" layoutX="137.0" layoutY="63.0" prefHeight="79.0" prefWidth="436.0" text="Descripcion del juego" />
+                <Pane fx:id="panelMetacritics" layoutX="137.0" layoutY="21.0" prefHeight="35.0" prefWidth="31.0">
+                    <children>
+                        <Label fx:id="puntuacionMetacritics" layoutX="5.0" layoutY="9.0" text="100" />
+                    </children>
+                </Pane>
+                <Label layoutX="387.0" layoutY="142.0" text="Imágenes del Juego" />
+                <Pane layoutX="314.0" layoutY="167.0" prefHeight="178.0" prefWidth="252.0" style="-fx-background-color: blue;">
+                    <children>
+                        <!-- Imagen para las capturas de pantalla -->
+                        <ImageView fx:id="imagenesJuego" fitHeight="150.0" fitWidth="200.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                    </children>
+                </Pane>
+                <!-- Flecha para pasar las imágenes a la derecha -->
+                <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="537.0" layoutY="345.0" onMouseClicked="#pasarDerecha" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../resources/hysinc%20games.jpg" />
+                    </image>
+                </ImageView>
+                <!-- Flecha para pasar las imágenes a la izquierda -->
+                <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="314.0" layoutY="345.0" onMouseClicked="#pasarIzquierda" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../resources/hysinc%20games.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="28.0" layoutY="142.0" text="Otros juegos relacionados:" />
+                <ListView fx:id="listaJuegosRelacionados" layoutX="28.0" layoutY="167.0" prefHeight="200.0" prefWidth="200.0" />
+                <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="544.0" layoutY="24.0" onMouseClicked="#ponerEnBiblioteca" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../resources/hysinc%20games.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </left>
 </BorderPane>
