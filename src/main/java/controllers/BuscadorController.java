@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.ListCell;
 import models.Juegos;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class BuscadorController {
@@ -23,7 +25,7 @@ public class BuscadorController {
     private ApiClient apiClient; // Cliente para conectarse a la API
 
     public BuscadorController() {
-        // Inicializa el cliente con la clave API de RAWG (reemplaza "TU_API_KEY" con tu clave real)
+        // Inicializa el cliente con la clave API de RAWG (reemplaza con tu clave real)
         this.apiClient = new ApiClient("8d18e821b4e6491d8a1096ba1a106001");
     }
 
@@ -42,7 +44,7 @@ public class BuscadorController {
                     setGraphic(null);
                 } else {
                     // Configura la celda con la imagen, nombre y puntuación
-                    setText(juego.getNombreJuego() + " (Metacritic: " + 
+                    setText(juego.getNombreJuego() + " (Metacritic: " +
                            (juego.getPuntuacionMetacritic() != null ? juego.getPuntuacionMetacritic() : "N/A") + ")");
                     
                     if (juego.getImagenUrl() != null) {
@@ -69,9 +71,19 @@ public class BuscadorController {
             return;
         }
 
+        // Codificar la búsqueda para que funcione correctamente con espacios y caracteres especiales.
+        try {
+            busqueda = URLEncoder.encode(busqueda, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        // Creamos una variable final para usarla en el lambda
+        final String busquedaFinal = busqueda;
+
         // Realiza la llamada a la API en un hilo secundario para evitar bloquear la interfaz
         new Thread(() -> {
-            List<Juegos> juegosEncontrados = apiClient.buscarJuegos(busqueda);
+            List<Juegos> juegosEncontrados = apiClient.buscarJuegos(busquedaFinal);
 
             // Actualiza la lista de resultados en el hilo de la interfaz
             Platform.runLater(() -> {
