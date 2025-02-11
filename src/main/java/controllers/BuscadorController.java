@@ -3,10 +3,14 @@ package controllers;
 import api.ApiClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import models.Juegos;
 
@@ -57,6 +61,17 @@ public class BuscadorController {
                 }
             }
         });
+        
+     // Agregar un evento para detectar el clic en un juego de la lista
+        listaResultados.setOnMouseClicked(event -> {
+            Juegos juegoSeleccionado = listaResultados.getSelectionModel().getSelectedItem();
+            if (juegoSeleccionado != null) {
+                // Aquí puedes manejar lo que pasa cuando se hace clic en un juego
+                System.out.println("Juego seleccionado: " + juegoSeleccionado.getNombreJuego());
+                // Por ejemplo, podrías abrir una nueva ventana con los detalles del juego
+                abrirMostrarJuegos(juegoSeleccionado.getNombreJuego());
+            }
+        });
     }
 
     /**
@@ -92,4 +107,27 @@ public class BuscadorController {
             });
         }).start();
     }
+    
+    private void abrirMostrarJuegos(String nombreJuego) {
+      try {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuego.fxml"));
+          Parent root = loader.load();
+
+          // Obtener el controlador y pasarle el nombre del juego
+          MostrarJuegoController controller = loader.getController();
+          controller.setNombreJuego(nombreJuego);
+
+          Scene scene = new Scene(root);
+          Stage stage = new Stage();
+          stage.setScene(scene);
+          stage.setTitle("Detalles del Juego");
+          stage.show();
+
+          // Cerrar la ventana actual
+          Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
+          currentStage.close();
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+  }
 }
