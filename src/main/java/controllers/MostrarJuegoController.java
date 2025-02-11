@@ -4,18 +4,21 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
- 
+
 import org.json.JSONArray;
 import org.json.JSONObject;
- 
+
 import api.ApiClient;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
- 
+import models.Juegos;
+
 public class MostrarJuegoController {
     
     @FXML
@@ -37,8 +40,9 @@ public class MostrarJuegoController {
     @FXML
     private ImageView imagenesJuego;
     
+    // ListView para mostrar los juegos relacionados
     @FXML
-    private ListView<String> listaJuegosRelacionados;  // Lista de juegos relacionados
+    private ListView<Juegos> listaJuegosRelacionados;
     
     private final ApiClient apiClient = new ApiClient("8d18e821b4e6491d8a1096ba1a106001");
     
@@ -86,7 +90,7 @@ public class MostrarJuegoController {
             // Codificar el nombre para evitar problemas con caracteres especiales
             String encodedGameName = URLEncoder.encode(nombreJuego, "UTF-8");
             
-            // Solicitar a la API la información del juego (busqueda)
+            // Solicitar a la API la información del juego (búsqueda)
             String response = apiClient.fetch("games", "search=" + encodedGameName + "&page_size=1");
             
             JSONObject jsonResponse = new JSONObject(response);
@@ -113,7 +117,6 @@ public class MostrarJuegoController {
                 // Construir el carrusel con las capturas de pantalla (screenshots)
                 // NO se añade la imagen de fondo al carrusel
                 imagenUrls.clear();  // Limpiar la lista antes de agregar nuevas capturas
- 
                 try {
                     // Obtener el id del juego (convertido a String)
                     String gameId = game.get("id").toString();
@@ -146,15 +149,8 @@ public class MostrarJuegoController {
                 imagenIndex = 0;
                 actualizarImagen();
  
-                // (Opcional) Cargar la lista de juegos relacionados, si aplica:
-                JSONArray relatedGames = game.optJSONArray("related_games");
-                if (relatedGames != null) {
-                    listaJuegosRelacionados.getItems().clear();
-                    for (int i = 0; i < relatedGames.length(); i++) {
-                        String relatedGame = relatedGames.getJSONObject(i).getString("name");
-                        listaJuegosRelacionados.getItems().add(relatedGame);
-                    }
-                }
+                // Actualizar la lista de juegos relacionados usando la búsqueda similar a BuscadorController
+                actualizarJuegosRelacionados(nombreJuego);
             } else {
                 descripcionJuego.setText("Juego no encontrado.");
             }
@@ -165,5 +161,78 @@ public class MostrarJuegoController {
             e.printStackTrace();
             descripcionJuego.setText("Error al cargar el juego.");
         }
+    }
+    
+    /**
+     * Actualiza la lista de juegos relacionados usando el nombre del juego actual como consulta.
+     * Se comporta de forma similar al método actualizarJuegos() del BuscadorController.
+     */
+    private void actualizarJuegosRelacionados(String gameName) {
+        String busqueda = gameName.trim();
+        if (busqueda.isEmpty()) {
+            listaJuegosRelacionados.getItems().clear();
+            return;
+        }
+ 
+        try {
+            busqueda = URLEncoder.encode(busqueda, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+ 
+        final String busquedaFinal = busqueda;
+ 
+        // Realizar la búsqueda en un hilo secundario para no bloquear la interfaz
+        new Thread(() -> {
+            List<Juegos> juegosEncontrados = apiClient.buscarJuegos(busquedaFinal);
+
+            // Actualizar la lista de resultados en el hilo de la interfaz
+            Platform.runLater(() -> {
+                listaJuegosRelacionados.getItems().clear();
+                // Añadimos solo el nombre, imagen y puntuación a la lista
+                for (Juegos juego : juegosEncontrados) {
+                    listaJuegosRelacionados.getItems().add(juego);  // Agregar el objeto completo
+                }
+            });
+        }).start();
+    }
+
+    // Definir la celda personalizada para mostrar nombre, imagen y puntuación
+    @FXML
+    public void initialize() {
+        // Configurar cómo se mostrarán los juegos en el ListView de juegos relacionados
+        listaJuegosRelacionados.setCellFactory(listView -> new ListCell<Juegos>() {
+            private final ImageView imageView = new ImageView();
+            private final Label nombreLabel = new Label();
+            private final Label puntuacionLabel = new Label();
+
+            @Override
+            protected void updateItem(Juegos juego, boolean empty) {
+                super.updateItem(juego, empty);
+                if (empty || juego == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    // Configura la celda con el nombre, puntuación y la imagen
+                    nombreLabel.setText(juego.getNombreJuego());
+                    puntuacionLabel.setText("Puntuación: " + (juego.getPuntuacionMetacritic() != null ? juego.getPuntuacionMetacritic() : "N/A"));
+                    
+                    if (juego.getImagenUrl() != null) {
+                        imageView.setImage(new Image(juego.getImagenUrl(), 50, 50, true, true));
+                    }
+
+                    // Layout de la celda
+                    Pane pane = new Pane();
+                    imageView.setLayoutX(10);
+                    imageView.setLayoutY(10);
+                    nombreLabel.setLayoutX(60);
+                    nombreLabel.setLayoutY(10);
+                    puntuacionLabel.setLayoutX(60);
+                    puntuacionLabel.setLayoutY(30);
+                    pane.getChildren().addAll(imageView, nombreLabel, puntuacionLabel);
+                    setGraphic(pane);
+                }
+            }
+        });
     }
 }
