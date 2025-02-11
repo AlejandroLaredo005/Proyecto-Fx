@@ -79,6 +79,7 @@ public class CambiarPasswordController {
             // Cargar el archivo FXML de la página de inicio
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/InicioSesion.fxml"));
             Scene escenaInicio = new Scene(loader.load());
+            escenaInicio.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
 
             // Mostrar la nueva pantalla de inicio
             Stage stage = (Stage) txtPassword.getScene().getWindow();

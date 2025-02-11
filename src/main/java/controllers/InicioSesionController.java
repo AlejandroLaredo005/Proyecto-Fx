@@ -26,8 +26,6 @@ public class InicioSesionController {
         String usuario = txtUsuario.getText();
         String contrasena = txtPassword.getText();
         
-     
-
         if (usuario.isEmpty() || contrasena.isEmpty()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor, complete todos los campos.");
             return;
@@ -79,6 +77,7 @@ public class InicioSesionController {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
             stage.setTitle("Registro");
             stage.show();
 
@@ -98,6 +97,7 @@ public class InicioSesionController {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setTitle("Recuperar Contraseña");
         stage.show();
 

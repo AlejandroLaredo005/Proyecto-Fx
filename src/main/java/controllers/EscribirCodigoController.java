@@ -67,6 +67,7 @@ public class EscribirCodigoController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/CambiarPassword.fxml"));  // Asegúrate de que esta ruta sea correcta
             Scene escenaCambiarPassword = new Scene(loader.load());
+            escenaCambiarPassword.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
 
             // Obtener el controlador de la nueva pantalla y pasar el correo
             CambiarPasswordController cambiarPasswordController = loader.getController();

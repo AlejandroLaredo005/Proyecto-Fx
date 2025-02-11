@@ -75,6 +75,7 @@ public class RecuperarPasswordController {
             // Cargar el archivo FXML de la nueva pantalla
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/EscribirCodigo.fxml"));
             Scene escenaEscribirCodigo = new Scene(loader.load());
+            escenaEscribirCodigo.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
 
             // Obtener el controlador de la nueva pantalla y pasar el correo
             EscribirCodigoController escribirCodigoController = loader.getController();

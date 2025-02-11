@@ -57,6 +57,7 @@ public class MainApp extends Application {
 
             // Mostrar la escena principal
             Scene scene = new Scene(rootLayout);
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
