@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controllers.BibliotecaController">
+   <top>
+      <fx:include source="Navegador.fxml" />
+   </top>
+
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="37.0" layoutY="29.0" prefHeight="26.0" prefWidth="162.0" style="-fx-background-color: blue;">
+               <children>
+                  <Label layoutX="9.0" layoutY="3.0" text="Todos Los Juegos">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label layoutX="237.0" layoutY="32.0" text="Ordenar Por">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Pane layoutX="319.0" layoutY="31.0" prefHeight="22.0" prefWidth="143.0" style="-fx-background-color: blue;">
+               <children>
+                  <Label layoutX="9.0" layoutY="3.0" text="Orden Alfabético v" />
+               </children>
+            </Pane>
+            <ImageView fitHeight="28.0" fitWidth="27.0" layoutX="476.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../resources/hysinc%20games.jpg" />
+               </image>
+            </ImageView>
+            <ScrollPane layoutX="37.0" layoutY="86.0" prefHeight="282.0" prefWidth="526.0">
+               <content>
+                  <!-- TilePane con ID para poder modificarlo en el controlador -->
+                  <TilePane fx:id="tilePaneJuegos" alignment="CENTER" hgap="10.0" prefColumns="3" prefRows="0" vgap="10.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
