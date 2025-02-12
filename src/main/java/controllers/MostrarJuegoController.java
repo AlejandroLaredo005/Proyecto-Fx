@@ -82,18 +82,38 @@ public class MostrarJuegoController {
     
     @FXML
     private void ponerEnBiblioteca() {
-        Usuarios usuarioLogueado = SesionUsuario.getUsuarioActual();
-        
-        Juegos currentJuego = new Juegos(tituloJuego.getText(), puntuacionMetacritics.getText(), descripcionJuego.getText(), logoUrl);
-        
-        // Crear la entrada de biblioteca con el usuario logueado y el juego actual.
-        Biblioteca nuevaEntrada = new Biblioteca(usuarioLogueado, currentJuego, "", "Quiero Jugarlo");
-        
-        // Guardar la entrada en la base de datos usando el DAO correspondiente
-        dao.BibliotecaDao bibliotecaDao = new dao.impl.BibliotecaDaoImpl();
-        bibliotecaDao.save(nuevaEntrada);
-        
-        System.out.println("Juego agregado a la biblioteca exitosamente.");
+   // Obtener el usuario logueado
+      Usuarios usuarioLogueado = SesionUsuario.getUsuarioActual();
+      String nombreJuego = tituloJuego.getText();
+      
+      // Usamos el DAO de Juegos para buscar si ya existe un juego con ese nombre.
+      dao.JuegosDao juegosDao = new dao.impl.JuegosDaoImpl();
+      Juegos currentJuego = juegosDao.findByNombre(nombreJuego).orElse(null);
+      
+      if (currentJuego == null) {
+          // Si no existe, se crea y se persiste
+          currentJuego = new Juegos(
+              nombreJuego,
+              puntuacionMetacritics.getText(),
+              descripcionJuego.getText(),
+              logoUrl
+          );
+          juegosDao.save(currentJuego);
+      }
+      
+      // Ahora usamos el DAO de Biblioteca para verificar si este juego ya está en la biblioteca del usuario
+      dao.BibliotecaDao bibliotecaDao = new dao.impl.BibliotecaDaoImpl();
+      if (bibliotecaDao.findByUsuarioAndJuego(usuarioLogueado, currentJuego).isPresent()) {
+          // Si ya existe, no se añade de nuevo (puedes mostrar una alerta o un mensaje)
+          System.out.println("El juego ya está en tu biblioteca.");
+          return;  // Salir del método sin añadir duplicado.
+      }
+      
+      // Si no existe, se crea la nueva entrada en la biblioteca
+      Biblioteca nuevaEntrada = new Biblioteca(usuarioLogueado, currentJuego, "", "Quiero Jugarlo");
+      bibliotecaDao.save(nuevaEntrada);
+      
+      System.out.println("Juego agregado a la biblioteca exitosamente.");
     }
     
     private void actualizarImagen() {
@@ -131,7 +151,7 @@ public class MostrarJuegoController {
                 String descripcion = game.optString("short_description", "Descripción no disponible.");
                 descripcionJuego.setText(descripcion);
                 
-                String metacriticsScore = game.optString("metacritic", "Sin puntuación");
+                String metacriticsScore = game.optString("metacritic", "No P");
                 puntuacionMetacritics.setText("Metacritic: " + metacriticsScore);
  
                 // Construir el carrusel con las capturas de pantalla (screenshots)

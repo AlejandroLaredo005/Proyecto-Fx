@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import models.Biblioteca;
 import models.Juegos;
+import models.Usuarios;
+import utils.SesionUsuario;
 
 public class BibliotecaController {
 
@@ -45,7 +47,9 @@ public class BibliotecaController {
         
         List<String> urls = new ArrayList<>();
         
+        Usuarios usuario = SesionUsuario.getUsuarioActual();
         for (Biblioteca biblioteca : bibliotecas) {
+          if (biblioteca.getUsuario().getIdUsuario().equals(usuario.getIdUsuario())) {
             Juegos juego = biblioteca.getJuego();
             if (juego != null) {
                 String nombreJuego = juego.getNombreJuego();
@@ -69,6 +73,7 @@ public class BibliotecaController {
                     }
                 }
             }
+          }
         }
         
         agregarImagenes(urls);

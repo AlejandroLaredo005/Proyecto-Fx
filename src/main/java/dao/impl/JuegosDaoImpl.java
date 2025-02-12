@@ -106,4 +106,20 @@ public class JuegosDaoImpl implements JuegosDao {
 
         return juegos;  // Devuelve la lista de juegos
     }
+    
+    @Override
+    public Optional<Juegos> findByNombre(String nombreJuego) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Juegos juego = null;
+        try {
+            juego = session.createQuery("FROM Juegos WHERE nombreJuego = :nombre", Juegos.class)
+                    .setParameter("nombre", nombreJuego)
+                    .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(juego);
+    }
 }

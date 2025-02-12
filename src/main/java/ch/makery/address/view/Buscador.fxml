@@ -3,8 +3,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
@@ -17,15 +15,14 @@
          <children>
             <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
             <!-- Campo de texto para búsqueda -->
-            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onKeyReleased="#actualizarJuegos" 
-                       prefHeight="26.0" prefWidth="416.0" promptText="Buscar" />
+            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onKeyReleased="#actualizarJuegos" prefHeight="26.0" prefWidth="383.0" promptText="Buscar" />
             
          
 
-            <Label layoutX="200.0" layoutY="57.0" text="Resultados de búsqueda" />
+            <Label layoutX="194.0" layoutY="56.0" text="Resultados de búsqueda" />
             
             <!-- ListView para mostrar resultados -->
-            <ListView fx:id="listaResultados" layoutX="100.0" layoutY="82.0" prefHeight="230.0" prefWidth="400.0" />
+            <ListView fx:id="listaResultados" layoutX="68.0" layoutY="81.0" prefHeight="215.0" prefWidth="384.0" />
          </children>
       </AnchorPane>
    </center>

@@ -1,14 +1,17 @@
 package dao.impl;
 
-import dao.BibliotecaDao;
-import models.Biblioteca;
+import java.util.List;
+import java.util.Optional;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import utils.HibernateUtil;
 
-import java.util.List;
-import java.util.Optional;
+import dao.BibliotecaDao;
+import models.Biblioteca;
+import models.Juegos;
+import models.Usuarios;
+import utils.HibernateUtil;
 
 public class BibliotecaDaoImpl implements BibliotecaDao {
 
@@ -94,6 +97,21 @@ public class BibliotecaDaoImpl implements BibliotecaDao {
         } catch (Exception e) {
             e.printStackTrace();
             return null;  // En caso de error, devuelve null
+        }
+    }
+    
+    @Override
+    public Optional<Biblioteca> findByUsuarioAndJuego(Usuarios usuario, Juegos juego) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Biblioteca b WHERE b.usuario = :usuario AND b.juego = :juego";
+            Biblioteca biblioteca = session.createQuery(hql, Biblioteca.class)
+                    .setParameter("usuario", usuario)
+                    .setParameter("juego", juego)
+                    .uniqueResult();
+            return Optional.ofNullable(biblioteca);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
         }
     }
 }

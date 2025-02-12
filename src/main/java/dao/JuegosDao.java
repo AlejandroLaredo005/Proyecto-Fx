@@ -1,7 +1,10 @@
 package dao;
 
+import java.util.Optional;
+
 import models.Juegos;
 
 public interface JuegosDao extends CommonDao<Juegos, String> {
-    // Métodos específicos de Juegos
+    
+  Optional<Juegos> findByNombre(String nombreJuego);
 }
