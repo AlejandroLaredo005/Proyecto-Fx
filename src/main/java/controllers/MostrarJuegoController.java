@@ -82,39 +82,46 @@ public class MostrarJuegoController {
     
     @FXML
     private void ponerEnBiblioteca() {
-   // Obtener el usuario logueado
-      Usuarios usuarioLogueado = SesionUsuario.getUsuarioActual();
-      String nombreJuego = tituloJuego.getText();
-      
-      // Usamos el DAO de Juegos para buscar si ya existe un juego con ese nombre.
-      dao.JuegosDao juegosDao = new dao.impl.JuegosDaoImpl();
-      Juegos currentJuego = juegosDao.findByNombre(nombreJuego).orElse(null);
-      
-      if (currentJuego == null) {
-          // Si no existe, se crea y se persiste
-          currentJuego = new Juegos(
-              nombreJuego,
-              puntuacionMetacritics.getText(),
-              descripcionJuego.getText(),
-              logoUrl,null
-          );
-          juegosDao.save(currentJuego);
-      }
-      
-      // Ahora usamos el DAO de Biblioteca para verificar si este juego ya está en la biblioteca del usuario
-      dao.BibliotecaDao bibliotecaDao = new dao.impl.BibliotecaDaoImpl();
-      if (bibliotecaDao.findByUsuarioAndJuego(usuarioLogueado, currentJuego).isPresent()) {
-          // Si ya existe, no se añade de nuevo (puedes mostrar una alerta o un mensaje)
-          System.out.println("El juego ya está en tu biblioteca.");
-          return;  // Salir del método sin añadir duplicado.
-      }
-      
-      // Si no existe, se crea la nueva entrada en la biblioteca
-      Biblioteca nuevaEntrada = new Biblioteca(usuarioLogueado, currentJuego, "", "Quiero Jugarlo");
-      bibliotecaDao.save(nuevaEntrada);
-      
-      System.out.println("Juego agregado a la biblioteca exitosamente.");
+        // Obtener el usuario logueado
+        Usuarios usuarioLogueado = SesionUsuario.getUsuarioActual();
+        String nombreJuego = tituloJuego.getText();
+        
+        // Usamos el DAO de Juegos para buscar si ya existe un juego con ese nombre.
+        dao.JuegosDao juegosDao = new dao.impl.JuegosDaoImpl();
+        Juegos currentJuego = juegosDao.findByNombre(nombreJuego).orElse(null);
+        
+        if (currentJuego == null) {
+            // Si no existe, se crea y se persiste
+            currentJuego = new Juegos(
+                nombreJuego,
+                puntuacionMetacritics.getText(),
+                descripcionJuego.getText(),
+                logoUrl,null
+            );
+            juegosDao.save(currentJuego);
+        }
+        
+        // Usamos el DAO de Biblioteca para verificar si este juego ya está en la biblioteca del usuario
+        dao.BibliotecaDao bibliotecaDao = new dao.impl.BibliotecaDaoImpl();
+        // Buscar la entrada en la biblioteca para este usuario y juego
+        java.util.Optional<Biblioteca> optionalEntrada = bibliotecaDao.findByUsuarioAndJuego(usuarioLogueado, currentJuego);
+        
+        if (optionalEntrada.isPresent()) {
+            // Si ya existe, lo eliminamos de la biblioteca
+            Biblioteca entradaExistente = optionalEntrada.get();
+            // Usamos el método delete pasándole el id (convertido a String)
+            bibliotecaDao.delete(entradaExistente.getIdBiblioteca().toString());
+            System.out.println("Juego removido de la biblioteca exitosamente.");
+            return;  // Salimos del método
+        }
+        
+        // Si no existe, se crea la nueva entrada en la biblioteca
+        Biblioteca nuevaEntrada = new Biblioteca(usuarioLogueado, currentJuego, "", "Quiero Jugarlo");
+        bibliotecaDao.save(nuevaEntrada);
+        
+        System.out.println("Juego agregado a la biblioteca exitosamente.");
     }
+
     
     private void actualizarImagen() {
         // Actualizar el ImageView con la imagen del carrusel según el índice actual
