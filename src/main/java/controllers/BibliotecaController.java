@@ -26,8 +26,6 @@ public class BibliotecaController {
      */
     @FXML
     public void initialize() {
-        // Configuramos el TilePane para que tenga 3 columnas, de modo que las imágenes no queden demasiado juntas.
-        tilePaneJuegos.setPrefColumns(3);
         cargarImagenes();
     }
 

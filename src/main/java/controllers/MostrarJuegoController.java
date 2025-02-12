@@ -22,6 +22,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import models.Juegos;
+import models.Usuarios;
+import utils.SesionUsuario;
 
 public class MostrarJuegoController {
     
@@ -77,7 +79,8 @@ public class MostrarJuegoController {
     
     @FXML
     private void ponerEnBiblioteca() {
-        // Implementar la lógica para agregar el juego a la biblioteca
+        Usuarios usuario = SesionUsuario.getUsuarioActual();
+        System.out.println("Usuario logueado: " + usuario.getNombre());
     }
     
     private void actualizarImagen() {

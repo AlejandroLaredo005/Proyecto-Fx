@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Usuarios;
+import utils.SesionUsuario;
 
 import java.util.List;
 
@@ -41,6 +42,8 @@ public class InicioSesionController {
 
         if (usuarioEncontrado != null) {
             if (usuarioEncontrado.getContraseña().equals(contrasena)) {
+                // Guardar usuario en sesión
+                SesionUsuario.iniciarSesion(usuarioEncontrado);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Inicio de sesión exitoso", "¡Bienvenido, " + usuarioEncontrado.getNombre() + "!");
                 // Lógica para abrir una nueva ventana
                 Stage currentStage = (Stage) txtUsuario.getScene().getWindow();
