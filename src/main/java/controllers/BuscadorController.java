@@ -1,22 +1,24 @@
 package controllers;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
+
 import api.ApiClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
 import models.Juegos;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
 
 public class BuscadorController {
 
@@ -25,6 +27,24 @@ public class BuscadorController {
 
     @FXML
     private ListView<Juegos> listaResultados; // La lista de resultados de búsqueda
+    
+    @FXML
+    private CheckBox unJugador;
+
+    @FXML
+    private CheckBox indie;
+
+    @FXML
+    private CheckBox multijugador;
+
+    @FXML
+    private CheckBox simulacion;
+
+    @FXML
+    private CheckBox aventura;
+
+    @FXML
+    private CheckBox accion;
 
     private ApiClient apiClient; // Cliente para conectarse a la API
 
@@ -130,4 +150,60 @@ public class BuscadorController {
           e.printStackTrace();
       }
   }
+    
+    @FXML
+    private void unJugadorPulsado(MouseEvent event) {
+        actualizarEstados();
+    }
+
+    @FXML
+    private void indiePulsado(MouseEvent event) {
+        actualizarEstados();
+    }
+
+    @FXML
+    private void multijugadorPulsado(MouseEvent event) {
+        actualizarEstados();
+    }
+
+    @FXML
+    private void simulacionPulsada(MouseEvent event) {
+        actualizarEstados();
+    }
+
+    @FXML
+    private void aventuraPulsada(MouseEvent event) {
+        actualizarEstados();
+    }
+
+    @FXML
+    private void accionPulsado(MouseEvent event) {
+        actualizarEstados();
+    }
+
+    /**
+     * Método auxiliar que revisa el estado de todos los CheckBox y realiza
+     * la lógica deseada (por ejemplo, imprimir el estado en consola, actualizar
+     * variables, etc.)
+     */
+    private void actualizarEstados() {
+        String estadoUnJugador = unJugador.isSelected() ? "Marcado" : "No Marcado";
+        String estadoIndie = indie.isSelected() ? "Marcado" : "No Marcado";
+        String estadoMultijugador = multijugador.isSelected() ? "Marcado" : "No Marcado";
+        String estadoSimulacion = simulacion.isSelected() ? "Marcado" : "No Marcado";
+        String estadoAventura = aventura.isSelected() ? "Marcado" : "No Marcado";
+        String estadoAccion = accion.isSelected() ? "Marcado" : "No Marcado";
+
+        // Aquí puedes procesar la información como necesites
+        System.out.println("Estado de CheckBoxes:");
+        System.out.println("  Un Jugador: " + estadoUnJugador);
+        System.out.println("  Indie: " + estadoIndie);
+        System.out.println("  Multijugador: " + estadoMultijugador);
+        System.out.println("  Simulación: " + estadoSimulacion);
+        System.out.println("  Aventura: " + estadoAventura);
+        System.out.println("  Acción: " + estadoAccion);
+        
+        // Si necesitas realizar lógica adicional (por ejemplo, habilitar/deshabilitar botones,
+        // actualizar variables de filtros, etc.), puedes hacerlo aquí.
+    }
 }

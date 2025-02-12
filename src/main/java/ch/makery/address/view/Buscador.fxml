@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
 <BorderPane prefHeight="400.0" prefWidth="597.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BuscadorController">
    <top>
@@ -15,7 +19,7 @@
          <children>
             <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
             <!-- Campo de texto para búsqueda -->
-            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onKeyReleased="#actualizarJuegos" prefHeight="26.0" prefWidth="383.0" promptText="Buscar" />
+            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" prefHeight="26.0" prefWidth="383.0" promptText="Buscar" />
             
          
 
@@ -23,6 +27,22 @@
             
             <!-- ListView para mostrar resultados -->
             <ListView fx:id="listaResultados" layoutX="68.0" layoutY="81.0" prefHeight="215.0" prefWidth="384.0" />
+            <Label layoutX="512.0" layoutY="56.0" text="Filtros" />
+            <Pane layoutX="463.0" layoutY="81.0" prefHeight="215.0" prefWidth="123.0" style="-fx-background-color: blue;">
+               <children>
+                  <CheckBox fx:id="unJugador" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#unJugadorPulsado" text="Un Jugador" />
+                  <CheckBox fx:id="indie" layoutX="14.0" layoutY="143.0" mnemonicParsing="false" onMouseClicked="#indiePulsado" text="Indie" />
+                  <CheckBox fx:id="multijugador" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#multijugadorPulsado" text="Multijugador" />
+                  <CheckBox fx:id="simulacion" layoutX="14.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#simulacionPulsada" text="Simulacion" />
+                  <CheckBox fx:id="aventura" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#aventuraPulsada" text="Aventura" />
+                  <CheckBox fx:id="accion" layoutX="14.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#accionPulsado" text="Accion" />
+               </children>
+            </Pane>
+            <ImageView fitHeight="23.0" fitWidth="23.0" layoutX="463.0" layoutY="24.0" onMouseClicked="#actualizarJuegos" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../resources/lupa.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>
