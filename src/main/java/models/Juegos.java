@@ -30,14 +30,18 @@ public class Juegos implements Serializable {
 
     @Transient // No se almacena en la base de datos
     private String imagenUrl;
+    
+    @Transient // Este campo se usa para almacenar los tags extraídos de la API
+    private String tags;
 
     public Juegos() {}
 
-    public Juegos(String nombreJuego, String puntuacionMetacritic, String descripcion, String imagenUrl) {
+    public Juegos(String nombreJuego, String puntuacionMetacritic, String descripcion, String imagenUrl, String tags) {
         this.nombreJuego = nombreJuego;
         this.puntuacionMetacritic = puntuacionMetacritic;
         this.descripcion = descripcion;
         this.imagenUrl = imagenUrl;
+        this.tags = tags;
     }
 
     public Integer getIdJuego() {
@@ -79,15 +83,24 @@ public class Juegos implements Serializable {
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
+    
+    public String getTags() {
+        return tags;
+    }
+    
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 
     @Override
     public String toString() {
         return "Juegos{" +
                 "idJuego=" + idJuego +
                 ", nombreJuego='" + nombreJuego + '\'' +
-                ", puntuacionMetacritic=" + puntuacionMetacritic +
+                ", puntuacionMetacritic='" + puntuacionMetacritic + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", imagenUrl='" + imagenUrl + '\'' +
+                ", tags='" + tags + '\'' +
                 '}';
     }
 }

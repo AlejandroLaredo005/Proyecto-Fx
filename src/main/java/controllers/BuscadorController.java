@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import api.ApiClient;
@@ -23,187 +24,186 @@ import models.Juegos;
 public class BuscadorController {
 
     @FXML
-    private TextField txtBuscador; // El campo de texto para realizar la búsqueda
+    private TextField txtBuscador; // Campo de texto para búsqueda
 
     @FXML
-    private ListView<Juegos> listaResultados; // La lista de resultados de búsqueda
-    
+    private ListView<Juegos> listaResultados; // Lista de resultados
+
     @FXML
     private CheckBox unJugador;
-
     @FXML
     private CheckBox indie;
-
     @FXML
     private CheckBox multijugador;
-
     @FXML
     private CheckBox simulacion;
-
     @FXML
     private CheckBox aventura;
-
     @FXML
     private CheckBox accion;
 
     private ApiClient apiClient; // Cliente para conectarse a la API
 
     public BuscadorController() {
-        // Inicializa el cliente con la clave API de RAWG (reemplaza con tu clave real)
+        // Reemplaza con tu clave API real de RAWG
         this.apiClient = new ApiClient("8d18e821b4e6491d8a1096ba1a106001");
     }
 
     @FXML
     public void initialize() {
-        // Configura cómo se mostrarán los juegos en el ListView
+        // Configura cómo se muestran los juegos en el ListView
         listaResultados.setCellFactory(listView -> new ListCell<>() {
-            private final ImageView imageView = new ImageView(); // Para mostrar la imagen del juego
-
+            private final ImageView imageView = new ImageView();
             @Override
             protected void updateItem(Juegos juego, boolean empty) {
                 super.updateItem(juego, empty);
-
                 if (empty || juego == null) {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    // Configura la celda con la imagen, nombre y puntuación
                     setText(juego.getNombreJuego() + " (Metacritic: " +
                            (juego.getPuntuacionMetacritic() != null ? juego.getPuntuacionMetacritic() : "N/A") + ")");
-                    
                     if (juego.getImagenUrl() != null) {
                         Image image = new Image(juego.getImagenUrl(), 50, 50, true, true);
                         imageView.setImage(image);
                     } else {
-                        imageView.setImage(null); // Sin imagen si no hay URL
+                        imageView.setImage(null);
                     }
                     setGraphic(imageView);
                 }
             }
         });
         
-     // Agregar un evento para detectar el clic en un juego de la lista
+        // Evento para clic en un juego de la lista
         listaResultados.setOnMouseClicked(event -> {
             Juegos juegoSeleccionado = listaResultados.getSelectionModel().getSelectedItem();
             if (juegoSeleccionado != null) {
-                // Aquí puedes manejar lo que pasa cuando se hace clic en un juego
                 System.out.println("Juego seleccionado: " + juegoSeleccionado.getNombreJuego());
-                // Por ejemplo, podrías abrir una nueva ventana con los detalles del juego
                 abrirMostrarJuegos(juegoSeleccionado.getNombreJuego());
             }
         });
     }
 
     /**
-     * Método para buscar juegos en la API RAWG en función del texto ingresado.
+     * Realiza la búsqueda y aplica el filtrado: se busca por el término y
+     * se conservan solo los juegos que contengan TODOS los tags marcados.
      */
     @FXML
     private void actualizarJuegos() {
         String busqueda = txtBuscador.getText().trim();
-
         if (busqueda.isEmpty()) {
-            listaResultados.getItems().clear(); // Limpia la lista si no hay texto
+            listaResultados.getItems().clear();
             return;
         }
-
-        // Codificar la búsqueda para que funcione correctamente con espacios y caracteres especiales.
+        
         try {
             busqueda = URLEncoder.encode(busqueda, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
-        // Creamos una variable final para usarla en el lambda
-        final String busquedaFinal = busqueda;
-
-        // Realiza la llamada a la API en un hilo secundario para evitar bloquear la interfaz
+        
+        // Se realiza la búsqueda con el término (sin filtros de tags en la URL)
+        final String consultaFinal = busqueda;
+        
         new Thread(() -> {
-            List<Juegos> juegosEncontrados = apiClient.buscarJuegos(busquedaFinal);
-
-            // Actualiza la lista de resultados en el hilo de la interfaz
+            // Obtener juegos de la API
+            List<Juegos> juegosEncontrados = apiClient.buscarJuegos(consultaFinal);
+            
+            // Preparar la lista de tags requeridos (sólo se añaden si el checkbox está marcado)
+            List<String> requiredTags = new ArrayList<>();
+            if (unJugador.isSelected()) requiredTags.add("singleplayer");
+            if (indie.isSelected()) requiredTags.add("indie");
+            if (multijugador.isSelected()) requiredTags.add("multiplayer");
+            if (simulacion.isSelected()) requiredTags.add("simulation");
+            if (aventura.isSelected()) requiredTags.add("adventure");
+            if (accion.isSelected()) requiredTags.add("action");
+            
+            // Filtrar los juegos para conservar solo aquellos que tengan TODOS los tags requeridos
+            List<Juegos> juegosFiltrados = new ArrayList<>();
+            for (Juegos juego : juegosEncontrados) {
+                boolean matches = true;
+                // Se asume que el método getTags() devuelve una cadena con los tags separados por comas
+                String tags = juego.getTags();
+                if (!requiredTags.isEmpty()) {
+                    if (tags == null || tags.isEmpty()) {
+                        matches = false;
+                    } else {
+                        String[] tagsArray = tags.split(",");
+                        for (String reqTag : requiredTags) {
+                            boolean found = false;
+                            for (String tag : tagsArray) {
+                                if (tag.trim().equalsIgnoreCase(reqTag)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found) {
+                                matches = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (matches) {
+                    juegosFiltrados.add(juego);
+                }
+            }
+            
             Platform.runLater(() -> {
                 listaResultados.getItems().clear();
-                listaResultados.getItems().addAll(juegosEncontrados);
+                listaResultados.getItems().addAll(juegosFiltrados);
             });
         }).start();
     }
     
     private void abrirMostrarJuegos(String nombreJuego) {
-      try {
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuego.fxml"));
-          Parent root = loader.load();
-
-          // Obtener el controlador y pasarle el nombre del juego
-          MostrarJuegoController controller = loader.getController();
-          controller.setNombreJuego(nombreJuego);
-
-          Scene scene = new Scene(root);
-          Stage stage = new Stage();
-          stage.setScene(scene);
-          stage.setTitle("Detalles del Juego");
-          stage.show();
-
-          // Cerrar la ventana actual
-          Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
-          currentStage.close();
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
-  }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuego.fxml"));
+            Parent root = loader.load();
+            // Obtener el controlador y pasarle el nombre del juego
+            MostrarJuegoController controller = loader.getController();
+            controller.setNombreJuego(nombreJuego);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Detalles del Juego");
+            stage.show();
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
+            currentStage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     @FXML
-    private void unJugadorPulsado(MouseEvent event) {
-        actualizarEstados();
-    }
+    private void unJugadorPulsado(MouseEvent event) { actualizarEstados(); }
 
     @FXML
-    private void indiePulsado(MouseEvent event) {
-        actualizarEstados();
-    }
+    private void indiePulsado(MouseEvent event) { actualizarEstados(); }
 
     @FXML
-    private void multijugadorPulsado(MouseEvent event) {
-        actualizarEstados();
-    }
+    private void multijugadorPulsado(MouseEvent event) { actualizarEstados(); }
 
     @FXML
-    private void simulacionPulsada(MouseEvent event) {
-        actualizarEstados();
-    }
+    private void simulacionPulsada(MouseEvent event) { actualizarEstados(); }
 
     @FXML
-    private void aventuraPulsada(MouseEvent event) {
-        actualizarEstados();
-    }
+    private void aventuraPulsada(MouseEvent event) { actualizarEstados(); }
 
     @FXML
-    private void accionPulsado(MouseEvent event) {
-        actualizarEstados();
-    }
+    private void accionPulsado(MouseEvent event) { actualizarEstados(); }
 
     /**
-     * Método auxiliar que revisa el estado de todos los CheckBox y realiza
-     * la lógica deseada (por ejemplo, imprimir el estado en consola, actualizar
-     * variables, etc.)
+     * Método auxiliar para imprimir el estado de los checkboxes.
      */
     private void actualizarEstados() {
-        String estadoUnJugador = unJugador.isSelected() ? "Marcado" : "No Marcado";
-        String estadoIndie = indie.isSelected() ? "Marcado" : "No Marcado";
-        String estadoMultijugador = multijugador.isSelected() ? "Marcado" : "No Marcado";
-        String estadoSimulacion = simulacion.isSelected() ? "Marcado" : "No Marcado";
-        String estadoAventura = aventura.isSelected() ? "Marcado" : "No Marcado";
-        String estadoAccion = accion.isSelected() ? "Marcado" : "No Marcado";
-
-        // Aquí puedes procesar la información como necesites
         System.out.println("Estado de CheckBoxes:");
-        System.out.println("  Un Jugador: " + estadoUnJugador);
-        System.out.println("  Indie: " + estadoIndie);
-        System.out.println("  Multijugador: " + estadoMultijugador);
-        System.out.println("  Simulación: " + estadoSimulacion);
-        System.out.println("  Aventura: " + estadoAventura);
-        System.out.println("  Acción: " + estadoAccion);
-        
-        // Si necesitas realizar lógica adicional (por ejemplo, habilitar/deshabilitar botones,
-        // actualizar variables de filtros, etc.), puedes hacerlo aquí.
+        System.out.println("  Un Jugador: " + (unJugador.isSelected() ? "Marcado" : "No Marcado"));
+        System.out.println("  Indie: " + (indie.isSelected() ? "Marcado" : "No Marcado"));
+        System.out.println("  Multijugador: " + (multijugador.isSelected() ? "Marcado" : "No Marcado"));
+        System.out.println("  Simulación: " + (simulacion.isSelected() ? "Marcado" : "No Marcado"));
+        System.out.println("  Aventura: " + (aventura.isSelected() ? "Marcado" : "No Marcado"));
+        System.out.println("  Acción: " + (accion.isSelected() ? "Marcado" : "No Marcado"));
     }
 }

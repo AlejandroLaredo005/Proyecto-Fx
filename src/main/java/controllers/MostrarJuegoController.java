@@ -96,7 +96,7 @@ public class MostrarJuegoController {
               nombreJuego,
               puntuacionMetacritics.getText(),
               descripcionJuego.getText(),
-              logoUrl
+              logoUrl,null
           );
           juegosDao.save(currentJuego);
       }
