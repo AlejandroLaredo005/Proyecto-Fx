@@ -93,7 +93,7 @@ public class MostrarJuegoBibliotecaController {
               nombreJuego,
               puntuacionMetacritics.getText(),
               descripcionJuego.getText(),
-              logoUrl,null
+              logoUrl,null,null
           );
           juegosDao.save(currentJuego);
       }
