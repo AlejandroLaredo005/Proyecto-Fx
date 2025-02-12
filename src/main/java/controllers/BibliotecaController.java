@@ -9,9 +9,13 @@ import api.ApiClient;
 import dao.BibliotecaDao;
 import dao.impl.BibliotecaDaoImpl;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 import models.Biblioteca;
 import models.Juegos;
 import models.Usuarios;
@@ -46,6 +50,7 @@ public class BibliotecaController {
         }
         
         List<String> urls = new ArrayList<>();
+        List<String> nombresJuegos = new ArrayList<>();
         
         Usuarios usuario = SesionUsuario.getUsuarioActual();
         for (Biblioteca biblioteca : bibliotecas) {
@@ -65,6 +70,7 @@ public class BibliotecaController {
                         
                         if (imagenUrl != null && !imagenUrl.trim().isEmpty()) {
                             urls.add(imagenUrl);
+                            nombresJuegos.add(nombreJuego); // Guardar el nombre
                         } else {
                             System.out.println("No se encontró imagen para el juego: " + nombreJuego);
                         }
@@ -76,30 +82,57 @@ public class BibliotecaController {
           }
         }
         
-        agregarImagenes(urls);
+        agregarImagenes(urls, nombresJuegos);
     }
 
     /**
      * Recorre la lista de URLs y, por cada una, crea un ImageView configurado
      * y lo añade al TilePane.
      */
-    private void agregarImagenes(List<String> urls) {
+    private void agregarImagenes(List<String> urls, List<String> nombresJuegos) {
       tilePaneJuegos.getChildren().clear(); // Limpia las imágenes previas
 
-      for (String url : urls) {
+      for (int i = 0; i < urls.size(); i++) {
           try {
-              Image image = new Image(url, 250, 150, true, true); // Ajusta el tamaño aquí
+              String url = urls.get(i);
+              String nombreJuego = nombresJuegos.get(i); // Obtener el nombre del juego
+
+              Image image = new Image(url, 250, 150, true, true);
               ImageView imageView = new ImageView(image);
 
-              imageView.setFitWidth(250);  // Ajusta el ancho de cada imagen
-              imageView.setFitHeight(150); // Ajusta la altura de cada imagen
+              imageView.setFitWidth(250);
+              imageView.setFitHeight(150);
               imageView.setPreserveRatio(true);
               imageView.setSmooth(true);
               imageView.setStyle("-fx-effect: dropshadow(gaussian, black, 5, 0, 0, 0);");
 
+              // Evento para capturar el clic en la imagen
+              imageView.setOnMouseClicked(event -> {
+                try {
+                  FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuegoBiblioteca.fxml"));
+                  Parent root = loader.load();
+
+                  // Obtener el controlador y pasarle el nombre del juego
+                  MostrarJuegoBibliotecaController controller = loader.getController();
+                  controller.setNombreJuego(nombreJuego);
+
+                  Scene scene = new Scene(root);
+                  Stage stage = new Stage();
+                  stage.setScene(scene);
+                  stage.setTitle("Detalles del Juego");
+                  stage.show();
+
+                  // Cerrar la ventana actual
+                  Stage currentStage = (Stage) tilePaneJuegos.getScene().getWindow();
+                  currentStage.close();
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+              });
+
               tilePaneJuegos.getChildren().add(imageView);
           } catch (Exception e) {
-              System.err.println("Error al cargar la imagen desde la URL: " + url);
+              System.err.println("Error al cargar la imagen desde la URL: " + urls.get(i));
               e.printStackTrace();
           }
       }
