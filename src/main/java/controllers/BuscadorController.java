@@ -95,67 +95,74 @@ public class BuscadorController {
             listaResultados.getItems().clear();
             return;
         }
-        
+
         try {
             busqueda = URLEncoder.encode(busqueda, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        
-        // Se realiza la búsqueda con el término (sin filtros de tags en la URL)
+
         final String consultaFinal = busqueda;
-        
+
         new Thread(() -> {
-            // Obtener juegos de la API
             List<Juegos> juegosEncontrados = apiClient.buscarJuegos(consultaFinal);
-            
-            // Preparar la lista de tags requeridos (sólo se añaden si el checkbox está marcado)
+
+            // Tags marcados en la interfaz (solo se mantienen los tags específicos)
             List<String> requiredTags = new ArrayList<>();
             if (unJugador.isSelected()) requiredTags.add("singleplayer");
-            if (indie.isSelected()) requiredTags.add("indie");
             if (multijugador.isSelected()) requiredTags.add("multiplayer");
-            if (simulacion.isSelected()) requiredTags.add("simulation");
-            if (aventura.isSelected()) requiredTags.add("adventure");
-            if (accion.isSelected()) requiredTags.add("action");
-            
-            // Filtrar los juegos para conservar solo aquellos que tengan TODOS los tags requeridos
+            // No se incluyen indie, simulación, aventura, acción en los tags
+
+            // Géneros específicos
+            List<String> requiredGenres = new ArrayList<>();
+            if (aventura.isSelected()) requiredGenres.add("adventure");
+            if (accion.isSelected()) requiredGenres.add("action");
+            if (indie.isSelected()) requiredGenres.add("indie");
+            if (simulacion.isSelected()) requiredGenres.add("simulation");
+
+            // Filtrar los juegos por tags y géneros
             List<Juegos> juegosFiltrados = new ArrayList<>();
             for (Juegos juego : juegosEncontrados) {
                 boolean matches = true;
-                // Se asume que el método getTags() devuelve una cadena con los tags separados por comas
-                String tags = juego.getTags();
-                if (!requiredTags.isEmpty()) {
-                    if (tags == null || tags.isEmpty()) {
-                        matches = false;
-                    } else {
-                        String[] tagsArray = tags.split(",");
-                        for (String reqTag : requiredTags) {
-                            boolean found = false;
-                            for (String tag : tagsArray) {
-                                if (tag.trim().equalsIgnoreCase(reqTag)) {
-                                    found = true;
-                                    break;
-                                }
-                            }
-                            if (!found) {
-                                matches = false;
-                                break;
-                            }
+
+                // Filtrado por tags
+                String tags = juego.getTags(); // Asume que getTags devuelve una cadena separada por comas
+                if (!requiredTags.isEmpty() && (tags == null || tags.isEmpty())) {
+                    matches = false;
+                } else {
+                    for (String reqTag : requiredTags) {
+                        if (!tags.toLowerCase().contains(reqTag.toLowerCase())) {
+                            matches = false;
+                            break;
                         }
                     }
                 }
+
+                // Filtrado por géneros
+                List<String> generos = juego.getGeneros(); // Ahora obtenemos la lista de géneros
+                if (!requiredGenres.isEmpty() && generos != null) {
+                    for (String genre : requiredGenres) {
+                        if (!generos.contains(genre)) {
+                            matches = false;
+                            break;
+                        }
+                    }
+                }
+
+                // Si pasa todos los filtros, agregarlo a la lista
                 if (matches) {
                     juegosFiltrados.add(juego);
                 }
             }
-            
+
             Platform.runLater(() -> {
                 listaResultados.getItems().clear();
                 listaResultados.getItems().addAll(juegosFiltrados);
             });
         }).start();
     }
-    
+
+
     private void abrirMostrarJuegos(String nombreJuego) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuego.fxml"));

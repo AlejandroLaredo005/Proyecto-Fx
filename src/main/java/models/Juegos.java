@@ -1,6 +1,9 @@
 package models;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,18 +33,26 @@ public class Juegos implements Serializable {
 
     @Transient // No se almacena en la base de datos
     private String imagenUrl;
-    
+
     @Transient // Este campo se usa para almacenar los tags extraídos de la API
     private String tags;
 
+    @Transient // Campo para almacenar los géneros
+    private String generosString;
+
+    @Transient // Campo que almacena los géneros como lista
+    private List<String> generos;
+
     public Juegos() {}
 
-    public Juegos(String nombreJuego, String puntuacionMetacritic, String descripcion, String imagenUrl, String tags) {
+    public Juegos(String nombreJuego, String puntuacionMetacritic, String descripcion, String imagenUrl, String tags, String generosString) {
         this.nombreJuego = nombreJuego;
         this.puntuacionMetacritic = puntuacionMetacritic;
         this.descripcion = descripcion;
         this.imagenUrl = imagenUrl;
         this.tags = tags;
+        this.generosString = generosString;
+    
     }
 
     public Integer getIdJuego() {
@@ -83,13 +94,45 @@ public class Juegos implements Serializable {
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
-    
+
     public String getTags() {
         return tags;
     }
-    
+
     public void setTags(String tags) {
         this.tags = tags;
+        // Convertir tags a lista si es necesario
+        if (tags != null && !tags.isEmpty()) {
+            this.generos = Arrays.stream(tags.split(","))
+                                 .map(String::trim)
+                                 .collect(Collectors.toList());
+        }
+    }
+
+    public List<String> getGeneros() {
+        return generos;
+    }
+
+    public void setGeneros(List<String> generos) {
+        this.generos = generos;
+        // Convertir la lista de géneros a una cadena de texto si se desea almacenar como String
+        if (generos != null) {
+            this.generosString = String.join(",", generos);
+        }
+    }
+
+    public String getGenerosString() {
+        return generosString;
+    }
+
+    public void setGenerosString(String generosString) {
+        this.generosString = generosString;
+        // Convertir la cadena de géneros a lista
+        if (generosString != null && !generosString.isEmpty()) {
+            this.generos = Arrays.stream(generosString.split(","))
+                                 .map(String::trim)
+                                 .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -101,6 +144,7 @@ public class Juegos implements Serializable {
                 ", descripcion='" + descripcion + '\'' +
                 ", imagenUrl='" + imagenUrl + '\'' +
                 ", tags='" + tags + '\'' +
+                ", generos=" + generos +
                 '}';
     }
 }

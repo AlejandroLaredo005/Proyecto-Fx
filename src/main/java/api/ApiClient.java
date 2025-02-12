@@ -80,49 +80,67 @@ public class ApiClient {
      * @return Lista de juegos parseados
      */
     private List<Juegos> parsearJuegosDesdeJson(String jsonResponse) {
-        List<Juegos> juegos = new ArrayList<>();
-        Gson gson = new Gson();
+      List<Juegos> juegos = new ArrayList<>();
+      Gson gson = new Gson();
 
-        try {
-            JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
-            if (!jsonObject.has("results") || !jsonObject.get("results").isJsonArray()) {
-                System.err.println("⚠️ Error: No se encontró 'results' en la respuesta o no es un array.");
-                return juegos;
-            }
-            JsonArray results = jsonObject.getAsJsonArray("results");
-            for (JsonElement element : results) {
-                if (element.isJsonObject()) {
-                    JsonObject game = element.getAsJsonObject();
-                    String nombre = (game.has("name") && !game.get("name").isJsonNull())
-                            ? game.get("name").getAsString() : "Desconocido";
-                    String metacritic = (game.has("metacritic") && !game.get("metacritic").isJsonNull())
-                            ? game.get("metacritic").getAsString() : null;
-                    String imagenUrl = (game.has("background_image") && !game.get("background_image").isJsonNull())
-                            ? game.get("background_image").getAsString() : null;
+      try {
+          JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
+          if (!jsonObject.has("results") || !jsonObject.get("results").isJsonArray()) {
+              System.err.println("⚠️ Error: No se encontró 'results' en la respuesta o no es un array.");
+              return juegos;
+          }
+          JsonArray results = jsonObject.getAsJsonArray("results");
+          for (JsonElement element : results) {
+              if (element.isJsonObject()) {
+                  JsonObject game = element.getAsJsonObject();
+                  String nombre = (game.has("name") && !game.get("name").isJsonNull())
+                          ? game.get("name").getAsString() : "Desconocido";
+                  String metacritic = (game.has("metacritic") && !game.get("metacritic").isJsonNull())
+                          ? game.get("metacritic").getAsString() : null;
+                  String imagenUrl = (game.has("background_image") && !game.get("background_image").isJsonNull())
+                          ? game.get("background_image").getAsString() : null;
 
-                    // Extraer tags del juego (se asume que la respuesta incluye un array "tags" con objetos que tienen "slug")
-                    List<String> tagsList = new ArrayList<>();
-                    if (game.has("tags") && game.get("tags").isJsonArray()) {
-                        JsonArray tagsArray = game.getAsJsonArray("tags");
-                        for (JsonElement tagElement : tagsArray) {
-                            if (tagElement.isJsonObject()) {
-                                JsonObject tagObj = tagElement.getAsJsonObject();
-                                if (tagObj.has("slug") && !tagObj.get("slug").isJsonNull()) {
-                                    tagsList.add(tagObj.get("slug").getAsString());
-                                }
-                            }
-                        }
-                    }
-                    String tags = String.join(",", tagsList);
+               // Código relevante en ApiClient para obtener géneros
+                  String generos = "";
+                  if (game.has("genres") && game.get("genres").isJsonArray()) {
+                      JsonArray genresArray = game.getAsJsonArray("genres");
+                      List<String> generosList = new ArrayList<>();
+                      for (JsonElement genreElement : genresArray) {
+                          if (genreElement.isJsonObject()) {
+                              JsonObject genreObj = genreElement.getAsJsonObject();
+                              if (genreObj.has("name") && !genreObj.get("name").isJsonNull()) {
+                                  generosList.add(genreObj.get("name").getAsString());
+                              }
+                          }
+                      }
+                      generos = String.join(",", generosList); // Unir géneros por comas
+                  }
 
-                    // Se pasa "" para la descripción ya que no se extrae de la API
-                    Juegos nuevoJuego = new Juegos(nombre, metacritic, "", imagenUrl, tags);
-                    juegos.add(nuevoJuego);
-                }
-            }
-        } catch (JsonSyntaxException e) {
-            System.err.println("⚠️ Error al parsear JSON: " + e.getMessage());
-        }
-        return juegos;
-    }
+
+                  // Extraer tags
+                  String tags = "";
+                  if (game.has("tags") && game.get("tags").isJsonArray()) {
+                      JsonArray tagsArray = game.getAsJsonArray("tags");
+                      List<String> tagsList = new ArrayList<>();
+                      for (JsonElement tagElement : tagsArray) {
+                          if (tagElement.isJsonObject()) {
+                              JsonObject tagObj = tagElement.getAsJsonObject();
+                              if (tagObj.has("slug") && !tagObj.get("slug").isJsonNull()) {
+                                  tagsList.add(tagObj.get("slug").getAsString());
+                              }
+                          }
+                      }
+                      tags = String.join(",", tagsList); // Unir tags por comas
+                  }
+
+                  Juegos nuevoJuego = new Juegos(nombre, metacritic, "", imagenUrl, tags, generos);
+                  juegos.add(nuevoJuego);
+              }
+          }
+      } catch (JsonSyntaxException e) {
+          System.err.println("⚠️ Error al parsear JSON: " + e.getMessage());
+      }
+      return juegos;
+  }
+
 }
