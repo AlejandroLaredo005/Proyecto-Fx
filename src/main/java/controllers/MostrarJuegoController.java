@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import models.Biblioteca;
 import models.Juegos;
 import models.Usuarios;
 import utils.SesionUsuario;
@@ -49,6 +50,8 @@ public class MostrarJuegoController {
     // ListView para mostrar los juegos relacionados
     @FXML
     private ListView<Juegos> listaJuegosRelacionados;
+    
+    private String logoUrl;
     
     private final ApiClient apiClient = new ApiClient("8d18e821b4e6491d8a1096ba1a106001");
     
@@ -79,8 +82,18 @@ public class MostrarJuegoController {
     
     @FXML
     private void ponerEnBiblioteca() {
-        Usuarios usuario = SesionUsuario.getUsuarioActual();
-        System.out.println("Usuario logueado: " + usuario.getNombre());
+        Usuarios usuarioLogueado = SesionUsuario.getUsuarioActual();
+        
+        Juegos currentJuego = new Juegos(tituloJuego.getText(), puntuacionMetacritics.getText(), descripcionJuego.getText(), logoUrl);
+        
+        // Crear la entrada de biblioteca con el usuario logueado y el juego actual.
+        Biblioteca nuevaEntrada = new Biblioteca(usuarioLogueado, currentJuego, "", "Quiero Jugarlo");
+        
+        // Guardar la entrada en la base de datos usando el DAO correspondiente
+        dao.BibliotecaDao bibliotecaDao = new dao.impl.BibliotecaDaoImpl();
+        bibliotecaDao.save(nuevaEntrada);
+        
+        System.out.println("Juego agregado a la biblioteca exitosamente.");
     }
     
     private void actualizarImagen() {
@@ -109,7 +122,7 @@ public class MostrarJuegoController {
  
                 // Obtener y asignar la imagen de portada (para el logo)
                 // Se usa cover_image o, de no existir, background_image
-                String logoUrl = game.optString("cover_image", game.optString("background_image"));
+                logoUrl = game.optString("cover_image", game.optString("background_image"));
                 if (!logoUrl.isEmpty()) {
                     logo.setImage(new Image(logoUrl));
                 }

@@ -1,8 +1,14 @@
 package models;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "juegos")
@@ -17,32 +23,20 @@ public class Juegos implements Serializable {
     private String nombreJuego;
 
     @Column(name = "puntuacion_metacritic")
-    private Integer puntuacionMetacritic;
-
-    @Column(name = "fecha_salida", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaSalida;
+    private String puntuacionMetacritic;
 
     @Column(name = "descripcion")
     private String descripcion;
-
-    @Column(name = "categorias")
-    private String categorias;
-
-    @Column(name = "juegos_relacionados")
-    private String juegosRelacionados;
 
     @Transient // No se almacena en la base de datos
     private String imagenUrl;
 
     public Juegos() {}
 
-    public Juegos(String nombreJuego, Integer puntuacionMetacritic, String fechaSalida, String descripcion, String categorias, String juegosRelacionados, String imagenUrl) {
+    public Juegos(String nombreJuego, String puntuacionMetacritic, String descripcion, String imagenUrl) {
         this.nombreJuego = nombreJuego;
         this.puntuacionMetacritic = puntuacionMetacritic;
         this.descripcion = descripcion;
-        this.categorias = categorias;
-        this.juegosRelacionados = juegosRelacionados;
         this.imagenUrl = imagenUrl;
     }
 
@@ -62,11 +56,11 @@ public class Juegos implements Serializable {
         this.nombreJuego = nombreJuego;
     }
 
-    public Integer getPuntuacionMetacritic() {
+    public String getPuntuacionMetacritic() {
         return puntuacionMetacritic;
     }
 
-    public void setPuntuacionMetacritic(Integer puntuacionMetacritic) {
+    public void setPuntuacionMetacritic(String puntuacionMetacritic) {
         this.puntuacionMetacritic = puntuacionMetacritic;
     }
 
@@ -78,22 +72,6 @@ public class Juegos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public String getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(String categorias) {
-        this.categorias = categorias;
-    }
-
-    public String getJuegosRelacionados() {
-        return juegosRelacionados;
-    }
-
-    public void setJuegosRelacionados(String juegosRelacionados) {
-        this.juegosRelacionados = juegosRelacionados;
-    }
-
     public String getImagenUrl() {
         return imagenUrl;
     }
@@ -102,24 +80,13 @@ public class Juegos implements Serializable {
         this.imagenUrl = imagenUrl;
     }
 
-    public Date getFechaSalida() {
-      return fechaSalida;
-    }
-
-    public void setFechaSalida(Date fechaSalida) {
-      this.fechaSalida = fechaSalida;
-    }
-
     @Override
     public String toString() {
         return "Juegos{" +
                 "idJuego=" + idJuego +
                 ", nombreJuego='" + nombreJuego + '\'' +
                 ", puntuacionMetacritic=" + puntuacionMetacritic +
-                ", fechaSalida=" + fechaSalida +
                 ", descripcion='" + descripcion + '\'' +
-                ", categorias='" + categorias + '\'' +
-                ", juegosRelacionados='" + juegosRelacionados + '\'' +
                 ", imagenUrl='" + imagenUrl + '\'' +
                 '}';
     }

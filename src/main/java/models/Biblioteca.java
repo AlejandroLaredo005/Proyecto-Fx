@@ -24,11 +24,10 @@ public class Biblioteca implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
-    @Cascade(CascadeType.ALL)
     private Usuarios usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_juego", referencedColumnName = "id_juego", nullable = false)
+    @JoinColumn(name = "nombre_juego", referencedColumnName = "nombre_juego", nullable = false)
     @Cascade(CascadeType.ALL)
     private Juegos juego;
 

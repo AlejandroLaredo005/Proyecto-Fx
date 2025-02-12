@@ -102,11 +102,10 @@ public class ApiClient {
                     JsonObject game = results.get(i).getAsJsonObject();
 
                     String nombre = game.has("name") ? game.get("name").getAsString() : "Desconocido";
-                    Integer metacritic = game.has("metacritic") && !game.get("metacritic").isJsonNull() ? game.get("metacritic").getAsInt() : null;
-                    String fechaSalida = game.has("released") && !game.get("released").isJsonNull() ? game.get("released").getAsString() : "N/A";
+                    String metacritic = game.has("metacritic") && !game.get("metacritic").isJsonNull() ? game.get("metacritic").getAsString() : null;
                     String imagenUrl = game.has("background_image") && !game.get("background_image").isJsonNull() ? game.get("background_image").getAsString() : null;
 
-                    Juegos nuevoJuego = new Juegos(nombre, metacritic, fechaSalida, "", "", "", imagenUrl);
+                    Juegos nuevoJuego = new Juegos(nombre, metacritic, "", imagenUrl);
                     juegos.add(nuevoJuego);
                 }
             }
