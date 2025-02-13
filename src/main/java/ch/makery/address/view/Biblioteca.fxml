@@ -25,7 +25,7 @@
             </Label>
             <ImageView fx:id="fotoFlecha" fitHeight="28.0" fitWidth="27.0" layoutX="506.0" layoutY="30.0" onMouseClicked="#cambiarOrden" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
+                  <Image url="@../../../../resources/flechas-arriba-y-abajo.png" />
                </image>
             </ImageView>
             <ScrollPane layoutX="37.0" layoutY="86.0" prefHeight="282.0" prefWidth="526.0">
