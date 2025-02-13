@@ -46,18 +46,18 @@
                 <!-- Flecha para pasar las imágenes a la derecha -->
                 <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="537.0" layoutY="345.0" onMouseClicked="#pasarDerecha" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../resources/hysinc%20games.jpg" />
+                        <Image url="@../../../../resources/flecha-correcta.png" />
                     </image>
                 </ImageView>
                 <!-- Flecha para pasar las imágenes a la izquierda -->
-                <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="314.0" layoutY="345.0" onMouseClicked="#pasarIzquierda" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="314.0" layoutY="345.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#pasarIzquierda" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../resources/hysinc%20games.jpg" />
+                        <Image url="@../../../../resources/flecha-correcta.png" />
                     </image>
                 </ImageView>
                 <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="544.0" layoutY="24.0" onMouseClicked="#ponerEnBiblioteca" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../resources/hysinc%20games.jpg" />
+                        <Image url="@../../../../resources/biblioteca.png" />
                     </image>
                 </ImageView>
             <RadioButton fx:id="jugado" layoutX="514.0" layoutY="62.0" mnemonicParsing="false" onMouseClicked="#cambiarEstado" text="Jugado" />

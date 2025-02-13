@@ -59,36 +59,44 @@ public class JuegosEsteYearController {
   
   private void cargarJuegos() {
     try {
-      // Obtener la fecha actual
-      LocalDate fechaActual = LocalDate.now();
-      // Obtener la fecha del mismo día del mes anterior
-      LocalDate fechaMesAnterior = fechaActual.minusMonths(1);
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+        // Obtener el primer día del año actual
+        LocalDate fechaInicio = LocalDate.of(fechaActual.getYear(), 1, 1);
 
-      // Formatear fechas en el formato YYYY-MM-DD
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-      String fechaInicio = fechaMesAnterior.format(formatter);
-      String fechaFin = fechaActual.format(formatter);
+        // Formatear fechas en el formato YYYY-MM-DD
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fechaInicioStr = fechaInicio.format(formatter);
+        String fechaFinStr = fechaActual.format(formatter);
 
-      // Construir la consulta con el nuevo rango de fechas
-      String response = apiClient.fetch("games", "dates=" + fechaInicio + "," + fechaFin + "&page_size=10");
-      
-      org.json.JSONObject json = new org.json.JSONObject(response);
-      org.json.JSONArray results = json.getJSONArray("results");
-      
-      for (int i = 0; i < results.length(); i++) {
-        String imageUrl = results.getJSONObject(i).optString("cover_image", results.getJSONObject(i).getString("background_image"));
+        // Construir la consulta:
+        // - Rango de fechas del año actual
+        // - Ordenado por "metacritic" de forma descendente (mejor valorados)
+        // - Limitando la respuesta a 10 juegos
+        String query = "dates=" + fechaInicioStr + "," + fechaFinStr 
+                     + "&ordering=-metacritic&page_size=10";
+        String response = apiClient.fetch("games", query);
         
-        // Obtener el ImageView correspondiente a la iteración
-        ImageView imgView = getImageViewByIndex(i);
+        org.json.JSONObject json = new org.json.JSONObject(response);
+        org.json.JSONArray results = json.getJSONArray("results");
         
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-          imgView.setImage(new Image(imageUrl));
-      } 
-      }
+        for (int i = 0; i < results.length(); i++) {
+            String imageUrl = results.getJSONObject(i)
+                                     .optString("cover_image", 
+                                                results.getJSONObject(i).getString("background_image"));
+            
+            // Obtener el ImageView correspondiente a la iteración
+            ImageView imgView = getImageViewByIndex(i);
+            
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                imgView.setImage(new Image(imageUrl));
+            }
+        }
     } catch (IOException | InterruptedException e) {
         e.printStackTrace();
     }
-  }
+}
+
   
   private ImageView getImageViewByIndex(int index) {
     switch (index) {

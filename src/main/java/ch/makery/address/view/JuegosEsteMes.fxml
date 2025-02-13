@@ -21,9 +21,9 @@
       <AnchorPane prefHeight="344.0" prefWidth="592.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
-            <ImageView fitHeight="34.0" fitWidth="32.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#atras" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="34.0" fitWidth="32.0" layoutX="14.0" layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#atras" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../resources/hysinc%20games.jpg" />
+                  <Image url="@../../../../resources/flecha-correcta.png" />
                </image>
             </ImageView>
             <Label layoutX="173.0" layoutY="16.0" text="Juegos que han salido este Mes">
