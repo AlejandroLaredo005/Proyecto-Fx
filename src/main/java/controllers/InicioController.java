@@ -71,15 +71,15 @@ public class InicioController {
       img3.setImage(new Image(imageUrls.get((currentIndex + 2) % imageUrls.size())));
       
       // Ajustar el tamaño de la imagen a la del ImageView, manteniendo la proporción
-      img1.setFitWidth(72);
+      img1.setFitWidth(90);
       img1.setFitHeight(111);
       img1.setPreserveRatio(false);
 
-      img2.setFitWidth(72);
+      img2.setFitWidth(90);
       img2.setFitHeight(111);
       img2.setPreserveRatio(false);
 
-      img3.setFitWidth(72);
+      img3.setFitWidth(90);
       img3.setFitHeight(111);
       img3.setPreserveRatio(false);
   }
@@ -127,8 +127,22 @@ public class InicioController {
 
     @FXML
     private void juegosCritica(MouseEvent event) {
-        System.out.println("Mostrando juegos alabados por la crítica");
-        // Implementar lógica para mostrar juegos alabados por la crítica
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/JuegosAlabadosCritica.fxml"));
+        Parent root = loader.load();
+        
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Juegos Alabados por la Crítica");
+        stage.show();
+        
+        // Cerrar la ventana actual
+        Stage currentStage = (Stage) txtBuscador.getScene().getWindow();
+        currentStage.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML

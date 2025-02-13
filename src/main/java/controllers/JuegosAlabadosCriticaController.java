@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class JuegosEsteMesController {
+public class JuegosAlabadosCriticaController {
   
   @FXML
   private ImageView img1;

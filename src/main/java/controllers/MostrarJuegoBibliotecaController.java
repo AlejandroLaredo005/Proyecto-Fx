@@ -38,6 +38,9 @@ public class MostrarJuegoBibliotecaController {
   @FXML
   private Label puntuacionMetacritics;
   
+  @FXML
+  private ImageView fotoBiblio;
+  
   // ImageView donde se mostrará el carrusel de capturas (screenshots)
   @FXML
   private ImageView imagenesJuego;

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -25,6 +26,15 @@ public class BibliotecaController {
 
     @FXML
     private TilePane tilePaneJuegos;
+    
+    @FXML
+    private ComboBox<String> comboBoxOrden;
+    
+    @FXML
+    private ComboBox<String> comboBoxFiltro;
+    
+    @FXML
+    private ImageView fotoFlecha;
 
     // Instancia del DAO para interactuar con la base de datos.
     private BibliotecaDao bibliotecaDao = new BibliotecaDaoImpl();
@@ -35,6 +45,19 @@ public class BibliotecaController {
     @FXML
     public void initialize() {
         cargarImagenes();
+        comboBoxOrden.getItems().addAll("Orden Alfabético", "Puntuación", "Fecha de Lanzamiento");
+        comboBoxFiltro.getItems().addAll("Todos los Juegos", "Juegos por Jugar", "Juegos Jugados");
+        
+        // Asignar un listener al ComboBox para detectar cambios
+        comboBoxOrden.setOnAction(event -> mostrarOpcionSeleccionada());
+        
+        // Asignar un listener al ComboBox para detectar cambios
+        comboBoxFiltro.setOnAction(event -> cambiarFiltroJuegos());
+    }
+    
+    @FXML
+    private void cambiarOrden() {
+      
     }
 
     /**
@@ -137,5 +160,14 @@ public class BibliotecaController {
           }
       }
   }
-
+    
+    private void mostrarOpcionSeleccionada() {
+      String opcionSeleccionada = comboBoxOrden.getValue();
+      System.out.println("Opción seleccionada: " + opcionSeleccionada);
+    }
+    
+    private void cambiarFiltroJuegos() {
+      String opcionSeleccionada = comboBoxFiltro.getValue();
+      System.out.println("Opción seleccionada: " + opcionSeleccionada);
+    }
 }

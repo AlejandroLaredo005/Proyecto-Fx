@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -30,7 +31,6 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label fx:id="descripcionJuego" alignment="TOP_LEFT" layoutX="137.0" layoutY="63.0" prefHeight="79.0" prefWidth="347.0" text="Descripcion del juego" />
                 <Pane fx:id="panelMetacritics" layoutX="137.0" layoutY="21.0" prefHeight="35.0" prefWidth="31.0">
                     <children>
                         <Label fx:id="puntuacionMetacritics" layoutX="5.0" layoutY="9.0" text="100" />
@@ -63,6 +63,11 @@
             <RadioButton fx:id="jugado" layoutX="514.0" layoutY="62.0" mnemonicParsing="false" onMouseClicked="#cambiarEstado" text="Jugado" />
             <Label layoutX="113.0" layoutY="142.0" text="Comentarios" />
             <TextArea fx:id="comentario" layoutX="28.0" layoutY="167.0" onKeyPressed="#cambiarComentario" prefHeight="200.0" prefWidth="238.0" promptText="Añadir un comentario..." />
+            <ScrollPane layoutX="147.0" layoutY="62.0" prefHeight="66.0" prefWidth="348.0">
+               <content>
+                      <Label fx:id="descripcionJuego" alignment="TOP_LEFT" wrapText="true"  text="Descripcion del juego" />
+               </content>
+            </ScrollPane>
             </children>
         </AnchorPane>
     </left>

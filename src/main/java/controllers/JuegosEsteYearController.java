@@ -3,7 +3,9 @@ package controllers;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import api.ApiClient;
 import javafx.fxml.FXML;
@@ -50,6 +52,8 @@ public class JuegosEsteYearController {
   
   private ApiClient apiClient;
   
+  private Map<ImageView, String> juegosMap = new HashMap<>(); // Mapeo de ImageView a nombres de juegos
+  
   @FXML
   public void initialize() {
       // Cargar las imágenes al inicializar el controlador
@@ -59,44 +63,63 @@ public class JuegosEsteYearController {
   
   private void cargarJuegos() {
     try {
-        // Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
-        // Obtener el primer día del año actual
-        LocalDate fechaInicio = LocalDate.of(fechaActual.getYear(), 1, 1);
-
-        // Formatear fechas en el formato YYYY-MM-DD
+        LocalDate fechaMesAnterior = fechaActual.minusMonths(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String fechaInicioStr = fechaInicio.format(formatter);
-        String fechaFinStr = fechaActual.format(formatter);
+        String fechaInicio = fechaMesAnterior.format(formatter);
+        String fechaFin = fechaActual.format(formatter);
 
-        // Construir la consulta:
-        // - Rango de fechas del año actual
-        // - Ordenado por "metacritic" de forma descendente (mejor valorados)
-        // - Limitando la respuesta a 10 juegos
-        String query = "dates=" + fechaInicioStr + "," + fechaFinStr 
-                     + "&ordering=-metacritic&page_size=10";
-        String response = apiClient.fetch("games", query);
-        
+        String response = apiClient.fetch("games", "dates=" + fechaInicio + "," + fechaFin + "&page_size=10");
         org.json.JSONObject json = new org.json.JSONObject(response);
         org.json.JSONArray results = json.getJSONArray("results");
-        
+
         for (int i = 0; i < results.length(); i++) {
-            String imageUrl = results.getJSONObject(i)
-                                     .optString("cover_image", 
-                                                results.getJSONObject(i).getString("background_image"));
+            String imageUrl = results.getJSONObject(i).optString("cover_image", results.getJSONObject(i).getString("background_image"));
+            String gameName = results.getJSONObject(i).getString("name"); // Obtener el nombre del juego
             
-            // Obtener el ImageView correspondiente a la iteración
             ImageView imgView = getImageViewByIndex(i);
             
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 imgView.setImage(new Image(imageUrl));
+                juegosMap.put(imgView, gameName); // Asociar ImageView con el nombre del juego
+                imgView.setOnMouseClicked(this::mostrarNombreJuego); // Agregar evento de clic
             }
         }
     } catch (IOException | InterruptedException e) {
         e.printStackTrace();
     }
-}
+  }
+  
+  private void mostrarNombreJuego(MouseEvent event) {
+    ImageView clickedImageView = (ImageView) event.getSource();
+    String gameName = juegosMap.get(clickedImageView);
+    if (gameName != null) {
+        abrirMostrarJuegos(gameName);
+    }
+  }
+  
+  private void abrirMostrarJuegos(String nombreJuego) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuego.fxml"));
+        Parent root = loader.load();
 
+        // Obtener el controlador y pasarle el nombre del juego
+        MostrarJuegoController controller = loader.getController();
+        controller.setNombreJuego(nombreJuego);
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Detalles del Juego");
+        stage.show();
+
+        // Cerrar la ventana actual
+        Stage currentStage = (Stage) img1.getScene().getWindow();
+        currentStage.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+  }
   
   private ImageView getImageViewByIndex(int index) {
     switch (index) {
