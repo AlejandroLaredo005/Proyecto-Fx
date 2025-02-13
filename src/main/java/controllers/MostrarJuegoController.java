@@ -158,7 +158,7 @@ public class MostrarJuegoController {
                 }
  
                 // Asignar descripción y puntuación
-                String descripcion = game.optString("short_description", "Descripción no disponible.");
+                String descripcion = game.optString("description", "Descripción no disponible.");
                 descripcionJuego.setText(descripcion);
                 
                 String metacriticsScore = game.optString("metacritic", "No P");

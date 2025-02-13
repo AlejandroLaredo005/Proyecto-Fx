@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -17,16 +18,16 @@
       <!-- Aquí va el contenido principal de la ventana -->
    </center>
    <center>
-      <AnchorPane prefHeight="344.0" prefWidth="592.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="344.0" prefWidth="592.0" style="-fx-background-color: #243785;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
-            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onMouseClicked="#buscar" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" />
+            <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" textFill="#fcfafa" />
+            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onMouseClicked="#buscar" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" style="-fx-background-color: #000939;" />
             <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="462.0" layoutY="25.0" onMouseClicked="#buscar" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../resources/lupa.png" />
                </image>
             </ImageView>
-            <Label layoutX="269.0" layoutY="73.0" text="Creemos que estos juegos pueden interesarte" />
+            <Label layoutX="269.0" layoutY="73.0" text="Creemos que estos juegos pueden interesarte" textFill="#fcf8f8" />
             <AnchorPane layoutX="29.0" layoutY="91.0" prefHeight="174.0" prefWidth="142.0" style="-fx-background-color: #000939;">
                <children>
                   <Label layoutX="20.0" layoutY="14.0" text="Te podría interesar:" textFill="WHITE">
@@ -38,24 +39,42 @@
                      <font>
                         <Font size="10.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Label>
                   <Label layoutX="19.0" layoutY="87.0" onMouseClicked="#juegosCritica" prefHeight="34.0" prefWidth="88.0" text="Juegos alavados por la crítica" textFill="WHITE" wrapText="true">
                      <font>
                         <Font size="10.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Label>
                   <Label layoutX="20.0" layoutY="125.0" onMouseClicked="#juegosYear" prefHeight="34.0" prefWidth="88.0" text="Juegos que han salido este año" textFill="WHITE" wrapText="true">
                      <font>
                         <Font size="10.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Label>
                </children>
             </AnchorPane>
             <HBox layoutX="223.0" layoutY="122.0" prefHeight="111.0" prefWidth="309.0" spacing="20.0">
    				<children>
-      				<ImageView fx:id="img1" fitHeight="111.0" fitWidth="90.0" onMouseClicked="#img1Pulsada" pickOnBounds="true" preserveRatio="true" />
-      				<ImageView fx:id="img2" fitHeight="111.0" fitWidth="90.0" onMouseClicked="#img2Pulsada" pickOnBounds="true" preserveRatio="true" />
-      				<ImageView fx:id="img3" fitHeight="111.0" fitWidth="90.0" onMouseClicked="#img3Pulsada" pickOnBounds="true" preserveRatio="true" />
+      				<ImageView fx:id="img1" fitHeight="111.0" fitWidth="90.0" onMouseClicked="#img1Pulsada" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+      				<ImageView fx:id="img2" fitHeight="111.0" fitWidth="90.0" onMouseClicked="#img2Pulsada" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+      				<ImageView fx:id="img3" fitHeight="111.0" fitWidth="90.0" onMouseClicked="#img3Pulsada" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
    				</children>
 			</HBox>
 

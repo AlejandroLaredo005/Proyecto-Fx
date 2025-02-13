@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -18,15 +19,18 @@
       <!-- Aquí va el contenido principal de la ventana -->
    </center>
    <center>
-      <AnchorPane prefHeight="344.0" prefWidth="592.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="344.0" prefWidth="592.0" style="-fx-background-color: #243785;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
+            <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" textFill="#ece7e7" />
             <ImageView fitHeight="34.0" fitWidth="32.0" layoutX="14.0" layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#atras" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../resources/flecha-correcta.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
-            <Label layoutX="173.0" layoutY="16.0" text="Juegos que han salido este Año">
+            <Label layoutX="173.0" layoutY="16.0" text="Juegos que han salido este Año" textFill="#f7f4f4">
                <font>
                   <Font size="18.0" />
                </font>
@@ -44,16 +48,46 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="img1" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="img2" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                  <ImageView fx:id="img3" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                  <ImageView fx:id="img4" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-                  <ImageView fx:id="img5" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-                  <ImageView fx:id="img6" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                  <ImageView fx:id="img7" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ImageView fx:id="img8" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <ImageView fx:id="img9" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <ImageView fx:id="img10" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <ImageView fx:id="img1" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img2" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img3" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img4" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img5" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img6" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img7" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img8" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img9" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
+                  <ImageView fx:id="img10" fitHeight="96.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ImageView>
                </children>
             </GridPane>
          </children>

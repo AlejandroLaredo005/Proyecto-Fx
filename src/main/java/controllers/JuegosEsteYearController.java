@@ -81,6 +81,9 @@ public class JuegosEsteYearController {
             
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 imgView.setImage(new Image(imageUrl));
+                imgView.setFitWidth(86);  // Asegurarse de que todas las imágenes tengan el ancho correcto
+                imgView.setFitHeight(96); // Asegurarse de que todas las imágenes tengan la altura correcta
+                imgView.setPreserveRatio(false);  // Asegurar que las imágenes se ajusten sin mantener la proporción
                 juegosMap.put(imgView, gameName); // Asociar ImageView con el nombre del juego
                 imgView.setOnMouseClicked(this::mostrarNombreJuego); // Agregar evento de clic
             }

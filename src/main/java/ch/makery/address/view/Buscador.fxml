@@ -15,27 +15,27 @@
       <fx:include source="Navegador.fxml" />
    </top>
    <center>
-      <AnchorPane prefHeight="344.0" prefWidth="592.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="344.0" prefWidth="592.0" style="-fx-background-color: #243785;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" />
+            <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" textFill="#fcfbfb" />
             <!-- Campo de texto para búsqueda -->
-            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" prefHeight="26.0" prefWidth="383.0" promptText="Buscar" />
+            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" prefHeight="26.0" prefWidth="383.0" promptText="Buscar" style="-fx-background-color: #000939;" />
             
          
 
-            <Label layoutX="194.0" layoutY="56.0" text="Resultados de búsqueda" />
+            <Label layoutX="194.0" layoutY="56.0" text="Resultados de búsqueda" textFill="#faf8f8" />
             
             <!-- ListView para mostrar resultados -->
-            <ListView fx:id="listaResultados" layoutX="68.0" layoutY="81.0" prefHeight="215.0" prefWidth="384.0" />
-            <Label layoutX="512.0" layoutY="56.0" text="Filtros" />
-            <Pane layoutX="463.0" layoutY="81.0" prefHeight="215.0" prefWidth="123.0" style="-fx-background-color: blue;">
+            <ListView fx:id="listaResultados" layoutX="68.0" layoutY="81.0" prefHeight="215.0" prefWidth="384.0" style="-fx-background-color: #b7c7dc;" />
+            <Label layoutX="512.0" layoutY="56.0" text="Filtros" textFill="#faf4f4" />
+            <Pane layoutX="463.0" layoutY="81.0" prefHeight="215.0" prefWidth="123.0" style="-fx-background-color: #000939;">
                <children>
-                  <CheckBox fx:id="unJugador" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#unJugadorPulsado" text="Un Jugador" />
-                  <CheckBox fx:id="indie" layoutX="14.0" layoutY="143.0" mnemonicParsing="false" onMouseClicked="#indiePulsado" text="Indie" />
-                  <CheckBox fx:id="multijugador" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#multijugadorPulsado" text="Multijugador" />
-                  <CheckBox fx:id="simulacion" layoutX="14.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#simulacionPulsada" text="Simulacion" />
-                  <CheckBox fx:id="aventura" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#aventuraPulsada" text="Aventura" />
-                  <CheckBox fx:id="accion" layoutX="14.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#accionPulsado" text="Accion" />
+                  <CheckBox fx:id="unJugador" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#unJugadorPulsado" text="Un Jugador" textFill="#ebeef2" />
+                  <CheckBox fx:id="indie" layoutX="14.0" layoutY="143.0" mnemonicParsing="false" onMouseClicked="#indiePulsado" text="Indie" textFill="#fcf8f8" />
+                  <CheckBox fx:id="multijugador" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#multijugadorPulsado" text="Multijugador" textFill="#f2eded" />
+                  <CheckBox fx:id="simulacion" layoutX="14.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#simulacionPulsada" text="Simulacion" textFill="#f7f1f1" />
+                  <CheckBox fx:id="aventura" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#aventuraPulsada" text="Aventura" textFill="#faf7f7" />
+                  <CheckBox fx:id="accion" layoutX="14.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#accionPulsado" text="Accion" textFill="#faf3f3" />
                </children>
             </Pane>
             <ImageView fitHeight="23.0" fitWidth="23.0" layoutX="463.0" layoutY="24.0" onMouseClicked="#actualizarJuegos" pickOnBounds="true" preserveRatio="true">
