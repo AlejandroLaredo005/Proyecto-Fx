@@ -44,7 +44,7 @@
                </font>
             </Label>
             <TextField fx:id="txtPassword" layoutX="136.0" layoutY="151.0" style="-fx-background-color: #061564;" />
-            <Button layoutX="137.0" layoutY="199.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #000939;" text="Iniciar Sesión" textFill="WHITE">
+            <Button fx:id="inicioBoton" layoutX="137.0" layoutY="199.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #000939;" text="Iniciar Sesión" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -62,7 +62,7 @@
                   <Font size="8.0" />
                </font>
             </Label>
-            <Button layoutX="137.0" layoutY="313.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #000939;" text="Regístrate" textFill="WHITE">
+            <Button fx:id="registrarBoton" layoutX="137.0" layoutY="313.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #000939;" text="Regístrate" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>

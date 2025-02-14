@@ -46,7 +46,7 @@
             <TextField fx:id="txtEmail" style="-fx-background-color: #061564;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Button layoutX="246.0" layoutY="252.0" mnemonicParsing="false" onAction="#crearCuenta" prefHeight="26.0" prefWidth="114.0" style="-fx-background-color: #000939;" text="Crear Cuenta" textFill="WHITE">
+      <Button fx:id="botonCrearCuenta" layoutX="246.0" layoutY="252.0" mnemonicParsing="false" onAction="#crearCuenta" prefHeight="26.0" prefWidth="114.0" style="-fx-background-color: #000939;" text="Crear Cuenta" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

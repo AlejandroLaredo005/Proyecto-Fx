@@ -60,24 +60,32 @@
         <version>1.15.4</version> <!-- Usa la última versión disponible -->
     </dependency>
     
+    <!-- JUnit 5 -->
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-api</artifactId>
-        <version>5.8.2</version>
+        <version>5.9.2</version>
         <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.8.2</version>
+        <version>5.9.2</version>
         <scope>test</scope>
     </dependency>
-    
-    <!-- Mockito -->
+
+    <!-- TestFX Core -->
     <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>4.0.0</version>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-core</artifactId>
+        <version>4.0.16-alpha</version>
+    </dependency>
+
+    <!-- TestFX JUnit 5 -->
+    <dependency>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-junit5</artifactId>
+        <version>4.0.16-alpha</version>
         <scope>test</scope>
     </dependency>
 </dependencies>
@@ -101,7 +109,7 @@
 		</plugin>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>mavan-surefire-plugin</artifactId>
+			<artifactId>maven-surefire-plugin</artifactId>
 			<version>3.3.0</version>
 		</plugin>
 	</plugins>
