@@ -156,6 +156,10 @@ public class MostrarJuegoController {
                 if (!logoUrl.isEmpty()) {
                     logo.setImage(new Image(logoUrl));
                 }
+                
+                logo.setFitWidth(110);
+                logo.setFitHeight(114);
+                logo.setPreserveRatio(false);
  
                 // Asignar descripción y puntuación
                 String descripcion = game.optString("description", "Descripción no disponible.");
@@ -173,7 +177,8 @@ public class MostrarJuegoController {
                     String descripcion2 = apiClient.obtenerDescripcionJuego(gameId);
                     descripcionJuego.setText(descripcion2);
                     descripcionJuego.setWrapText(true); // Habilita el ajuste de texto
-                    descripcionJuego.setPrefWidth(200); // Establece un ancho preferido para que se ajuste
+                    descripcionJuego.setPrefWidth(350); // Establece un ancho preferido para que se ajuste
+                    descripcionJuego.setStyle("-fx-text-fill: white;"); 
                     // Realizar la petición para obtener las screenshots del juego
                     String screenshotsResponse = apiClient.fetch("games/" + gameId + "/screenshots", "");
                     JSONObject screenshotsJson = new JSONObject(screenshotsResponse);
@@ -284,6 +289,9 @@ public class MostrarJuegoController {
                     puntuacionLabel.setLayoutX(60);
                     puntuacionLabel.setLayoutY(30);
                     pane.getChildren().addAll(imageView, nombreLabel, puntuacionLabel);
+                    pane.setStyle("-fx-background-color:  #000939");
+                    nombreLabel.setStyle("-fx-text-fill: white");
+                    puntuacionLabel.setStyle("-fx-text-fill: white");
                     setGraphic(pane);
                 }
             }

@@ -76,7 +76,7 @@
                </cursor></RadioButton>
             <Label layoutX="113.0" layoutY="142.0" text="Comentarios" textFill="#fcf6f6" />
             <TextArea fx:id="comentario" layoutX="28.0" layoutY="167.0" onKeyPressed="#cambiarComentario" prefHeight="200.0" prefWidth="238.0" promptText="Añadir un comentario..." />
-            <ScrollPane layoutX="147.0" layoutY="62.0" prefHeight="66.0" prefWidth="348.0">
+            <ScrollPane layoutX="147.0" layoutY="62.0" prefHeight="66.0" prefWidth="348.0" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER">
                <content>
                       <Label fx:id="descripcionJuego" alignment="TOP_LEFT" text="Descripcion del juego" wrapText="true" />
                </content>

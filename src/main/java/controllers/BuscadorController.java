@@ -70,6 +70,8 @@ public class BuscadorController {
                         imageView.setImage(null);
                     }
                     setGraphic(imageView);
+                    
+                    setStyle("-fx-background-color: #000939; -fx-text-fill: white;");
                 }
             }
         });
@@ -173,6 +175,7 @@ public class BuscadorController {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
             stage.setTitle("Detalles del Juego");
             stage.show();
             // Cerrar la ventana actual

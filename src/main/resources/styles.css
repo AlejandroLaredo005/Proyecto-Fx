@@ -1,3 +1,15 @@
 .text-field {
     -fx-text-fill: white;  /* Color blanco para el texto */
 }
+
+.scroll-pane {
+    -fx-background-color: #000939; /* Cambia el fondo completo del ScrollPane */
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #000939; /* Cambia el fondo del área de contenido */
+}
+
+.scroll-pane .scroll-bar {
+    -fx-background-color: #000939; /* Cambia el fondo de las barras de desplazamiento */
+}

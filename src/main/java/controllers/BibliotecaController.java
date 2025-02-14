@@ -208,6 +208,7 @@ public class BibliotecaController {
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
                         stage.setScene(scene);
+                        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
                         stage.setTitle("Detalles del Juego");
                         stage.show();
 

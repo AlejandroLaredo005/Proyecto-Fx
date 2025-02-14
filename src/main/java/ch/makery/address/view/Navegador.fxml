@@ -17,7 +17,7 @@
                   <Image url="@../../../../resources/hysinc%20games.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="lblInicio" layoutX="140.0" layoutY="20.0" onMouseClicked="#inicioPulsado" text="Inicio" textFill="WHITE">
+            <Label fx:id="lblInicio" layoutX="193.0" layoutY="18.0" onMouseClicked="#inicioPulsado" text="Inicio" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -25,15 +25,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label layoutX="255.0" layoutY="20.0" onMouseClicked="#bibliotecaPulsada" text="Biblioteca Personal" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label layoutX="452.0" layoutY="20.0" onMouseClicked="#cuentaPulsada" text="Mi cuenta" textFill="WHITE">
+            <Label layoutX="346.0" layoutY="18.0" onMouseClicked="#bibliotecaPulsada" text="Biblioteca Personal" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

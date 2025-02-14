@@ -54,11 +54,4 @@ public class NavegadorController {
         e.printStackTrace();
     }
   }
-
-  @FXML
-  private void cuentaPulsada(MouseEvent event) {
-      System.out.println("Mi cuenta pulsada");
-      // Lógica para mostrar la cuenta del usuario
-  }
-
 }
