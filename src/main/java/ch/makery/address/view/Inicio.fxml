@@ -21,7 +21,7 @@
       <AnchorPane prefHeight="344.0" prefWidth="592.0" style="-fx-background-color: #243785;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="262.0" layoutY="305.0" text="Hysinc Games" textFill="#fcfafa" />
-            <TextField fx:id="txtBuscador" layoutX="68.0" layoutY="23.0" onMouseClicked="#buscar" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" style="-fx-background-color: #000939;" />
+            <TextField fx:id="txtBuscador" layoutX="92.0" layoutY="23.0" onMouseClicked="#buscar" prefHeight="26.0" prefWidth="416.0" promptText="Buscar" style="-fx-background-color: #000939;" />
             <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="462.0" layoutY="25.0" onMouseClicked="#buscar" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../resources/lupa.png" />

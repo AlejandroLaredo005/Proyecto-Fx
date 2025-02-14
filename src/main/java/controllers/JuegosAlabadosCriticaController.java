@@ -1,10 +1,11 @@
 package controllers;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Comparator;
+import java.util.List;
 
 import api.ApiClient;
 import javafx.fxml.FXML;
@@ -15,36 +16,29 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class JuegosAlabadosCriticaController {
   
   @FXML
   private ImageView img1;
-  
   @FXML
   private ImageView img2;
-  
   @FXML
   private ImageView img3;
-  
   @FXML
   private ImageView img4;
-  
   @FXML
   private ImageView img5;
-  
   @FXML
   private ImageView img6;
-  
   @FXML
   private ImageView img7;
-  
   @FXML
   private ImageView img8;
-  
   @FXML
   private ImageView img9;
-  
   @FXML
   private ImageView img10;
   
@@ -54,42 +48,45 @@ public class JuegosAlabadosCriticaController {
   
   @FXML
   public void initialize() {
-      // Cargar las imágenes al inicializar el controlador
+      // Se inicializa el cliente y se cargan los juegos
       apiClient = new ApiClient("8d18e821b4e6491d8a1096ba1a106001");
       cargarJuegos();
   }
   
   private void cargarJuegos() {
     try {
-        LocalDate fechaActual = LocalDate.now();
-        LocalDate fechaMesAnterior = fechaActual.minusMonths(1);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String fechaInicio = fechaMesAnterior.format(formatter);
-        String fechaFin = fechaActual.format(formatter);
-
-        String response = apiClient.fetch("games", "dates=" + fechaInicio + "," + fechaFin + "&page_size=10");
-        org.json.JSONObject json = new org.json.JSONObject(response);
-        org.json.JSONArray results = json.getJSONArray("results");
+        // Solicitar los 10 juegos mejor valorados según metacritic (orden descendente)
+        String response = apiClient.fetch("games", "ordering=-metacritic&page_size=10");
+        JSONObject json = new JSONObject(response);
+        JSONArray results = json.getJSONArray("results");
 
         for (int i = 0; i < results.length(); i++) {
-            String imageUrl = results.getJSONObject(i).optString("cover_image", results.getJSONObject(i).getString("background_image"));
-            String gameName = results.getJSONObject(i).getString("name"); // Obtener el nombre del juego
-            
-            ImageView imgView = getImageViewByIndex(i);
-            
+            JSONObject game = results.getJSONObject(i);
+            // Se intenta obtener primero "cover_image", si no se encuentra se usa "background_image"
+            String imageUrl = game.optString("cover_image", game.optString("background_image", ""));
+            String gameName = game.optString("name", "Sin nombre");
+
+            // Mostrar el juego solo si existe una URL de imagen válida
             if (imageUrl != null && !imageUrl.isEmpty()) {
-                imgView.setImage(new Image(imageUrl));
-                imgView.setFitWidth(86);  // Asegurarse de que todas las imágenes tengan el ancho correcto
-                imgView.setFitHeight(96); // Asegurarse de que todas las imágenes tengan la altura correcta
-                imgView.setPreserveRatio(false);  // Asegurar que las imágenes se ajusten sin mantener la proporción
-                juegosMap.put(imgView, gameName); // Asociar ImageView con el nombre del juego
-                imgView.setOnMouseClicked(this::mostrarNombreJuego); // Agregar evento de clic
+                ImageView imgView = getImageViewByIndex(i);
+                if (imgView != null) {
+                    // Si la URL no es completa, se podría agregar un prefijo (descomenta la siguiente línea si es necesario)
+                    // if (!imageUrl.startsWith("http")) { imageUrl = "https://media.rawg.io/media/games/" + imageUrl; }
+
+                    imgView.setImage(new Image(imageUrl));
+                    imgView.setFitWidth(86);
+                    imgView.setFitHeight(96);
+                    imgView.setPreserveRatio(false);
+                    juegosMap.put(imgView, gameName);
+                    imgView.setOnMouseClicked(this::mostrarNombreJuego);
+                }
             }
         }
     } catch (IOException | InterruptedException e) {
         e.printStackTrace();
     }
-  }
+}
+
   
   private void mostrarNombreJuego(MouseEvent event) {
     ImageView clickedImageView = (ImageView) event.getSource();
@@ -136,7 +133,7 @@ public class JuegosAlabadosCriticaController {
         case 9: return img10;
         default: return null;
     }
-}
+  }
 
   @FXML
   private void atras(MouseEvent event) {
@@ -151,12 +148,10 @@ public class JuegosAlabadosCriticaController {
       stage.setTitle("Inicio");
       stage.show();
       
-      // Obtener el stage de la ventana actual
-      Stage currentStage = (Stage) img1.getScene().getWindow(); 
-
       // Cerrar la ventana actual
+      Stage currentStage = (Stage) img1.getScene().getWindow(); 
       currentStage.close();
-  } catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }

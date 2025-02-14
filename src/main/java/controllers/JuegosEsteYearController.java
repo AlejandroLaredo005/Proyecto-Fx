@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import api.ApiClient;
@@ -16,47 +15,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import models.Juegos;
 
 public class JuegosEsteYearController {
   
   @FXML
-  private ImageView img1;
-  
-  @FXML
-  private ImageView img2;
-  
-  @FXML
-  private ImageView img3;
-  
-  @FXML
-  private ImageView img4;
-  
-  @FXML
-  private ImageView img5;
-  
-  @FXML
-  private ImageView img6;
-  
-  @FXML
-  private ImageView img7;
-  
-  @FXML
-  private ImageView img8;
-  
-  @FXML
-  private ImageView img9;
-  
-  @FXML
-  private ImageView img10;
+  private ImageView img1, img2, img3, img4, img5, img6, img7, img8, img9, img10;
   
   private ApiClient apiClient;
-  
-  private Map<ImageView, String> juegosMap = new HashMap<>(); // Mapeo de ImageView a nombres de juegos
+  private Map<ImageView, String> juegosMap = new HashMap<>(); 
   
   @FXML
   public void initialize() {
-      // Cargar las imágenes al inicializar el controlador
       apiClient = new ApiClient("8d18e821b4e6491d8a1096ba1a106001");
       cargarJuegos();
   }
@@ -64,9 +33,9 @@ public class JuegosEsteYearController {
   private void cargarJuegos() {
     try {
         LocalDate fechaActual = LocalDate.now();
-        LocalDate fechaMesAnterior = fechaActual.minusMonths(1);
+        LocalDate inicioAno = LocalDate.of(fechaActual.getYear(), 1, 1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String fechaInicio = fechaMesAnterior.format(formatter);
+        String fechaInicio = inicioAno.format(formatter);
         String fechaFin = fechaActual.format(formatter);
 
         String response = apiClient.fetch("games", "dates=" + fechaInicio + "," + fechaFin + "&page_size=10");
@@ -75,17 +44,17 @@ public class JuegosEsteYearController {
 
         for (int i = 0; i < results.length(); i++) {
             String imageUrl = results.getJSONObject(i).optString("cover_image", results.getJSONObject(i).getString("background_image"));
-            String gameName = results.getJSONObject(i).getString("name"); // Obtener el nombre del juego
+            String gameName = results.getJSONObject(i).getString("name"); 
             
             ImageView imgView = getImageViewByIndex(i);
             
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 imgView.setImage(new Image(imageUrl));
-                imgView.setFitWidth(86);  // Asegurarse de que todas las imágenes tengan el ancho correcto
-                imgView.setFitHeight(96); // Asegurarse de que todas las imágenes tengan la altura correcta
-                imgView.setPreserveRatio(false);  // Asegurar que las imágenes se ajusten sin mantener la proporción
-                juegosMap.put(imgView, gameName); // Asociar ImageView con el nombre del juego
-                imgView.setOnMouseClicked(this::mostrarNombreJuego); // Agregar evento de clic
+                imgView.setFitWidth(86);
+                imgView.setFitHeight(96);
+                imgView.setPreserveRatio(false);
+                juegosMap.put(imgView, gameName);
+                imgView.setOnMouseClicked(this::mostrarNombreJuego);
             }
         }
     } catch (IOException | InterruptedException e) {
@@ -106,7 +75,6 @@ public class JuegosEsteYearController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ch/makery/address/view/MostrarJuego.fxml"));
         Parent root = loader.load();
 
-        // Obtener el controlador y pasarle el nombre del juego
         MostrarJuegoController controller = loader.getController();
         controller.setNombreJuego(nombreJuego);
 
@@ -117,7 +85,6 @@ public class JuegosEsteYearController {
         stage.setTitle("Detalles del Juego");
         stage.show();
 
-        // Cerrar la ventana actual
         Stage currentStage = (Stage) img1.getScene().getWindow();
         currentStage.close();
     } catch (Exception e) {
@@ -139,7 +106,7 @@ public class JuegosEsteYearController {
         case 9: return img10;
         default: return null;
     }
-}
+  }
 
   @FXML
   private void atras(MouseEvent event) {
@@ -153,12 +120,9 @@ public class JuegosEsteYearController {
       stage.setTitle("Inicio");
       stage.show();
       
-      // Obtener el stage de la ventana actual
-      Stage currentStage = (Stage) img1.getScene().getWindow(); 
-
-      // Cerrar la ventana actual
+      Stage currentStage = (Stage) img1.getScene().getWindow();
       currentStage.close();
-  } catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
