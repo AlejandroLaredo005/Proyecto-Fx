@@ -238,6 +238,8 @@ public class MostrarJuegoBibliotecaController {
             try {
                 // Obtener el id del juego (convertido a String)
                 String gameId = game.get("id").toString();
+                String descripcion2 = apiClient.obtenerDescripcionJuego(gameId);
+                descripcionJuego.setText(descripcion2);
                 // Realizar la petición para obtener las screenshots del juego
                 String screenshotsResponse = apiClient.fetch("games/" + gameId + "/screenshots", "");
                 JSONObject screenshotsJson = new JSONObject(screenshotsResponse);

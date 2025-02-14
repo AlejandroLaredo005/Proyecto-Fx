@@ -1,12 +1,5 @@
 package api;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import models.Juegos;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -16,6 +9,18 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import models.Juegos;
 
 public class ApiClient {
     private static final String BASE_URL = "https://api.rawg.io/api";
@@ -142,5 +147,56 @@ public class ApiClient {
       }
       return juegos;
   }
+    
 
+    public String obtenerDescripcionJuego(String id) {
+      try {
+        String jsonResponse = fetch("games/" + id, null);
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
+
+        if (jsonObject.has("description") && !jsonObject.get("description").isJsonNull()) {
+            String descripcion = jsonObject.get("description").getAsString();
+
+            // 1. Limpiar etiquetas HTML con Jsoup
+            String textoLimpio = Jsoup.parse(descripcion).text();
+
+            // 2. Extraer solo la parte en inglés
+            String textoEnIngles = extraerTextoEnIngles(textoLimpio);
+
+            return textoEnIngles.isEmpty() ? "Description not available in English." : textoEnIngles;
+        }
+    } catch (IOException | InterruptedException e) {
+        System.err.println("⚠️ Error retrieving description: " + e.getMessage());
+    }
+    return "Description not available.";
+  }
+
+  private String extraerTextoEnIngles(String texto) {
+    String[] frases = texto.split("[.!?] "); // Dividir por frases
+    StringBuilder resultado = new StringBuilder();
+
+    // Expresión regular para detectar frases en inglés con palabras clave
+    Pattern patron = Pattern.compile("\\b(the|a|an|is|are|this|that|game|player|level|mission|story|mode|action|adventure|explore)\\b", Pattern.CASE_INSENSITIVE);
+
+    for (String frase : frases) {
+        Matcher matcher = patron.matcher(frase);
+        if (matcher.find() && !contienePalabrasEspanol(frase)) { // Verifica que no tenga español
+            resultado.append(frase).append(". ");
+        }
+    }
+    
+    return resultado.toString().trim();
+  }
+
+  // 🔍 Función auxiliar para detectar español y evitar frases mezcladas
+  private boolean contienePalabrasEspanol(String texto) {
+    String[] palabrasEspanol = {"el", "la", "los", "las", "de", "en", "con", "por", "para", "un", "una", "este", "esta", "es", "juego", "jugador", "historia", "aventura"};
+    for (String palabra : palabrasEspanol) {
+        if (texto.toLowerCase().contains(" " + palabra + " ")) {
+            return true; // Si contiene español, descartamos la frase
+        }
+    }
+    return false;
+  }
 }

@@ -170,6 +170,10 @@ public class MostrarJuegoController {
                 try {
                     // Obtener el id del juego (convertido a String)
                     String gameId = game.get("id").toString();
+                    String descripcion2 = apiClient.obtenerDescripcionJuego(gameId);
+                    descripcionJuego.setText(descripcion2);
+                    descripcionJuego.setWrapText(true); // Habilita el ajuste de texto
+                    descripcionJuego.setPrefWidth(200); // Establece un ancho preferido para que se ajuste
                     // Realizar la petición para obtener las screenshots del juego
                     String screenshotsResponse = apiClient.fetch("games/" + gameId + "/screenshots", "");
                     JSONObject screenshotsJson = new JSONObject(screenshotsResponse);

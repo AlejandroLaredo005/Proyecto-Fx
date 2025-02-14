@@ -71,9 +71,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </ImageView>
-            <ScrollPane layoutX="141.0" layoutY="55.0" prefHeight="63.0" prefWidth="369.0">
+            <ScrollPane layoutX="141.0" layoutY="55.0" prefHeight="63.0" prefWidth="369.0" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER">
                <content>
-                      <Label fx:id="descripcionJuego" alignment="TOP_LEFT" text="Descripcion del juego" wrapText="true" />
+                      <Label fx:id="descripcionJuego" alignment="TOP_LEFT" text="Descripcion del juego"  />
                </content>
             </ScrollPane>
             </children>
