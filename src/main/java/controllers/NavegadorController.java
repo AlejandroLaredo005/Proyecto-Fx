@@ -48,6 +48,7 @@ public class NavegadorController {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setTitle("Biblioteca");
         stage.show();
     } catch (Exception e) {

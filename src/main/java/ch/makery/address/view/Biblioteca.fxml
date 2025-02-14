@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -16,9 +17,9 @@
    </top>
 
    <center>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #243785;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="237.0" layoutY="32.0" text="Ordenar Por">
+            <Label layoutX="237.0" layoutY="32.0" text="Ordenar Por" textFill="#faf9f9">
                <font>
                   <Font size="14.0" />
                </font>
@@ -27,6 +28,9 @@
                <image>
                   <Image url="@../../../../resources/flechas-arriba-y-abajo.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <ScrollPane layoutX="37.0" layoutY="86.0" prefHeight="282.0" prefWidth="526.0">
                <content>
@@ -34,8 +38,8 @@
                   <TilePane fx:id="tilePaneJuegos" alignment="CENTER" hgap="10.0" prefColumns="3" prefRows="0" vgap="10.0" />
                </content>
             </ScrollPane>
-            <ComboBox fx:id="comboBoxOrden" layoutX="320.0" layoutY="30.0" prefHeight="26.0" prefWidth="177.0" />
-            <ComboBox fx:id="comboBoxFiltro" layoutX="37.0" layoutY="31.0" prefHeight="26.0" prefWidth="147.0" promptText="Todos los Juegos" />
+            <ComboBox fx:id="comboBoxOrden" layoutX="320.0" layoutY="30.0" prefHeight="26.0" prefWidth="177.0" style="-fx-background-color: #000939;" />
+            <ComboBox fx:id="comboBoxFiltro" layoutX="37.0" layoutY="31.0" prefHeight="26.0" prefWidth="147.0" promptText="Todos los Juegos" style="-fx-background-color: #000939;" />
          </children>
       </AnchorPane>
    </center>

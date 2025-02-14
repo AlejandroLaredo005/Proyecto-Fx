@@ -13,3 +13,8 @@
 .scroll-pane .scroll-bar {
     -fx-background-color: #000939; /* Cambia el fondo de las barras de desplazamiento */
 }
+
+.combo-box .text {
+    -fx-fill: white; /* Cambia el color del texto a blanco */
+}
+

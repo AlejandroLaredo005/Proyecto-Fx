@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -52,6 +53,66 @@ public class BibliotecaController {
         // Inicializa los ComboBox.
         comboBoxOrden.getItems().addAll("Orden Alfabético", "Puntuación");
         comboBoxFiltro.getItems().addAll("Todos los Juegos", "Juegos por Jugar", "Juegos Jugados");
+        
+     // Configurar CellFactory para personalizar la apariencia de las celdas
+        comboBoxOrden.setCellFactory(lv -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item);
+                    setStyle("-fx-background-color: #000939; -fx-text-fill: white;");
+                } else {
+                    setText(null);
+                    setStyle(null);
+                }
+            }
+        });
+
+        // Configurar la celda seleccionada
+        comboBoxOrden.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item);
+                    setStyle("-fx-background-color: #000939; -fx-text-fill: white;");
+                } else {
+                    setText(null);
+                    setStyle(null);
+                }
+            }
+        });
+        
+     // Configurar CellFactory para personalizar la apariencia de las celdas
+        comboBoxFiltro.setCellFactory(lv -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item);
+                    setStyle("-fx-background-color: #000939; -fx-text-fill: white;");
+                } else {
+                    setText(null);
+                    setStyle(null);
+                }
+            }
+        });
+
+        // Configurar la celda seleccionada
+        comboBoxFiltro.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item);
+                    setStyle("-fx-background-color: #000939; -fx-text-fill: white;");
+                } else {
+                    setText(null);
+                    setStyle(null);
+                }
+            }
+        });
         
         // Listener para detectar cambios en el orden.
         comboBoxOrden.setOnAction(event -> mostrarOpcionSeleccionada());
@@ -191,7 +252,7 @@ public class BibliotecaController {
 
                 imageView.setFitWidth(250);
                 imageView.setFitHeight(150);
-                imageView.setPreserveRatio(true);
+                imageView.setPreserveRatio(false);
                 imageView.setSmooth(true);
                 imageView.setStyle("-fx-effect: dropshadow(gaussian, black, 5, 0, 0, 0);");
 
