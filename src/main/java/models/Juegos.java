@@ -28,8 +28,9 @@ public class Juegos implements Serializable {
     @Column(name = "puntuacion_metacritic")
     private String puntuacionMetacritic;
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
+
 
     @Transient // No se almacena en la base de datos
     private String imagenUrl;
